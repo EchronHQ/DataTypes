@@ -1,6 +1,8 @@
 <?php
 namespace DataTypes;
 
+use DataTypes\Helper\IdHelper;
+
 class IdObjectCollection extends BasicObject
 {
     protected $_hashMap = [];
@@ -108,7 +110,7 @@ class IdObjectCollection extends BasicObject
      */
     protected function _get($key)
     {
-        $key = BasicObject::formatId($key);
+        $key = IdHelper::formatId($key);
         if (isset($this->_collection[$key])) {
             return $this->_collection[$key];
         }
@@ -118,7 +120,7 @@ class IdObjectCollection extends BasicObject
 
     protected function _delete($key)
     {
-        $key = BasicObject::formatId($key);
+        $key = IdHelper::formatId($key);
         if (isset($this->_collection[$key])) {
             unset($this->_collection[$key]);
             $keyIndex = array_search($key, $this->_hashMap);
@@ -134,7 +136,7 @@ class IdObjectCollection extends BasicObject
 
     protected function _put($id, $value)
     {
-        $id = BasicObject::formatId($id);
+        $id = IdHelper::formatId($id);
         if (isset($this->_collection[$id])) {
             throw new \Exception('Item `' . $id . '` already in use');
         }

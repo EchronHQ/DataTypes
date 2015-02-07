@@ -2,6 +2,8 @@
 
 namespace DataTypes;
 
+use DataTypes\Helper\IdHelper;
+
 abstract class IdCodeObjectCollection extends IdObjectCollection
 {
     private $codeHashMap;
@@ -30,7 +32,7 @@ abstract class IdCodeObjectCollection extends IdObjectCollection
 
     protected function getByCode($code)
     {
-        $code = self::formatId($code);
+        $code = IdHelper::formatId($code);
         if (isset($this->codeHashMap[$code])) {
             $id = $this->codeHashMap[$code];
 

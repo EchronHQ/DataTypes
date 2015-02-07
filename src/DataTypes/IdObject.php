@@ -1,6 +1,8 @@
 <?php
 namespace DataTypes;
 
+use DataTypes\Helper\IdHelper;
+
 class IdObject extends BasicObject
 {
     private $id;
@@ -22,7 +24,7 @@ class IdObject extends BasicObject
         if (is_numeric($id)) {
 
         }
-        $id = BasicObject::formatId($id);
+        $id = IdHelper::formatId($id);
 
         $this->id = $id;
 

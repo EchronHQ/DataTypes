@@ -3,6 +3,7 @@
 namespace DataTypes;
 
 use DataTypes\Exceptions\InvalidCodeException;
+use DataTypes\Helper\IdHelper;
 
 class CodeObject extends IdObject
 {
@@ -25,7 +26,7 @@ class CodeObject extends IdObject
         if (!is_string($code) && !is_int($code)) {
             throw new InvalidCodeException('Code must be string');
         }
-        $this->code = self::formatId($code);
+        $this->code = IdHelper::formatId($code);
     }
 
 }
