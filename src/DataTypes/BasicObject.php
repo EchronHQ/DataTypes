@@ -27,4 +27,9 @@ class BasicObject
     {
         throw new \Exception('Cannot set new property "' . $name . '" to instance of "' . get_class($this) . '"');
     }
+
+    function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
 }

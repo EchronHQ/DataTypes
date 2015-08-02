@@ -1,44 +1,16 @@
 <?php
-
 namespace DataTypes;
 
-use DataTypes\Helper\IdHelper;
-
-abstract class IdCodeObjectCollection extends IdObjectCollection
+abstract class IdCodeObjectCollection extends IdCodeCollection
 {
-    private $codeHashMap;
 
-    final public function __construct()
+    //TODO: make this protected
+    public function add(IdCodeObject $object)
     {
-        $this->codeHashMap = [];
+
+        $index = $this->put($object->getId(), $object->getCode(), $object);
+
+        return $index;
     }
 
-    public function getCodes()
-    {
-        return array_keys($this->codeHashMap);
-    }
-
-    final protected function add(CodeObject $object)
-    {
-        if (isset($this->codeHashMap[$object->getCode()])) {
-            throw new \Exception('Code `' . $object->getCode() . '` already in collection');
-        }
-        $key = $this->_put($object->getId(), $object);
-        if ($key === false) {
-            throw new \Exception('Id `' . $object->getId() . '` already in collection');
-        }
-        $this->codeHashMap[$object->getCode()] = $key;
-    }
-
-    protected function getByCode($code)
-    {
-        $code = IdHelper::formatId($code);
-        if (isset($this->codeHashMap[$code])) {
-            $id = $this->codeHashMap[$code];
-
-            return $this->_get($id);
-        }
-
-        return null;
-    }
 }

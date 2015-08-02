@@ -1,9 +1,11 @@
 <?php
 namespace DataTypes;
 
+
+
 use DataTypes\Helper\IdHelper;
 
-trait CollectionTrait
+trait IdCollectionTrait
 {
     protected $_hashMap = [];
     protected $_collection = [];
@@ -75,76 +77,74 @@ trait CollectionTrait
         reset($this->_collection);
     }
 
-    protected function _getKeys()
+    protected function _getIds()
     {
         return array_keys($this->_hashMap);
     }
 
-    protected function put($key, $value)
+    protected function put($id, $value)
     {
 
-        if ($this->has($key)) {
-            throw new \Exception('Key `' . $key . '` already in use');
+        if ($this->hasId($id)) {
+            throw new \Exception('Id "' . $id . '" already in collection');
         }
         $index = count($this->_collection);
 
         $this->_collection[$index] = $value;
 
-        $key = IdHelper::formatId($key);
-        $this->_hashMap[$key] = $index;
+        $id = BasicObject::formatId($id);
+        $this->_hashMap[$id] = $index;
         $this->length++;
 
         return $index;
     }
 
-    protected function has($key)
+    protected function hasId($id)
     {
-        $key = IdHelper::formatId($key);
+        $id = IdHelper::formatId($id);
 
-        return isset($this->_hashMap[$key]);
+        return isset($this->_hashMap[$id]);
     }
 
-    /**
-     * @param $key
-     *
-     * @return BasicObject
-     */
-    protected function getByKey($key)
+    protected function getById($id)
     {
-        $index = $this->getObjectIndexByKey($key);
-        if ($index !== null) {
-            if (isset($this->_collection[$index])) {
-                return $this->_collection[$index];
-            }
+       
+
+        $index = $this->getObjectIndexById($id);
+        if (!isset($this->_collection[$index])) {
+            throw new \Exception('no object for id "' . $id . '" not in collection');
         }
 
-        return null;
+        return $this->_collection[$index];
+
     }
 
-    protected function getObjectIndexByKey($key)
+    protected function getObjectIndexById($id)
     {
-        $key = IdHelper::formatId($key);
-        if (isset($this->_hashMap[$key])) {
-            return $this->_hashMap[$key];
+        $id = IdHelper::formatId($id);
+        if (isset($this->_hashMap[$id])) {
+            return $this->_hashMap[$id];
         }
 
-        return null;
+        throw new \Exception('id "' . $id . '" not in collection');
     }
 
-    protected function getObjectKeyByIndex($index)
+    protected function getObjectIdByIndex($index)
     {
         return array_search($index, $this->_hashMap);
     }
 
-    protected function deleteByKey($key)
+    protected function deleteById($id)
     {
+        //TODO: update all hashmaps or not? or just remove the object from collection and the key from the hashmap (do we have 'holes' in our hashmap?)
 
-        $key = IdHelper::formatId($key);
-        $index = $this->getObjectIndexByKey($key);
-        if ($index !== null) {
+        $id = IdHelper::formatId($id);
+
+        if ($this->hasId($id)) {
+            $index = $this->getObjectIndexById($id);
             if (isset($this->_collection[$index])) {
                 unset($this->_collection[$index]);
-                unset($this->_hashMap[$key]);
+                unset($this->_hashMap[$id]);
                 $this->length--;
 
                 return true;
