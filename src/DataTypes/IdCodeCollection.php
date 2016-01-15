@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace DataTypes;
 
 class IdCodeCollection extends BasicObject implements \Iterator, \Countable, \JsonSerializable

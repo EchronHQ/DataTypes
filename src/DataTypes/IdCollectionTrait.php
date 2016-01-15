@@ -1,8 +1,9 @@
 <?php
+declare(strict_types = 1);
 namespace DataTypes;
 
-
-
+use DataTypes\Exception\IdAlreadyInCollectionException;
+use DataTypes\Exception\NotInCollectionException;
 use DataTypes\Helper\IdHelper;
 
 trait IdCollectionTrait
@@ -11,12 +12,12 @@ trait IdCollectionTrait
     protected $_collection = [];
     private $length = 0;
 
-    public function length()
+    public function length():int
     {
         return $this->getLength();
     }
 
-    protected function getLength()
+    protected function getLength():int
     {
         return $this->length;
     }
@@ -77,7 +78,7 @@ trait IdCollectionTrait
         reset($this->_collection);
     }
 
-    protected function _getIds()
+    protected function _getIds():array
     {
         return array_keys($this->_hashMap);
     }
@@ -86,20 +87,20 @@ trait IdCollectionTrait
     {
 
         if ($this->hasId($id)) {
-            throw new \Exception('Id "' . $id . '" already in collection');
+            throw new IdAlreadyInCollectionException('Id "' . $id . '" already in collection');
         }
         $index = count($this->_collection);
 
         $this->_collection[$index] = $value;
 
-        $id = BasicObject::formatId($id);
+        $id = IdHelper::formatId($id);
         $this->_hashMap[$id] = $index;
         $this->length++;
 
         return $index;
     }
 
-    protected function hasId($id)
+    protected function hasId($id):bool
     {
         $id = IdHelper::formatId($id);
 
@@ -108,11 +109,15 @@ trait IdCollectionTrait
 
     protected function getById($id)
     {
-       
+        if (!$this->hasId($id)) {
+
+            throw new NotInCollectionException('id "' . $id . '" not in collection (' . implode(', ', array_keys($this->_hashMap)) . ' - ' . get_class($this) . ')');
+
+        }
 
         $index = $this->getObjectIndexById($id);
         if (!isset($this->_collection[$index])) {
-            throw new \Exception('no object for id "' . $id . '" not in collection');
+            throw new NotInCollectionException('no object for id "' . $id . '" not in collection (' . implode(', ', array_keys($this->_hashMap)) . ' - ' . get_class($this) . ')');
         }
 
         return $this->_collection[$index];
@@ -126,7 +131,7 @@ trait IdCollectionTrait
             return $this->_hashMap[$id];
         }
 
-        throw new \Exception('id "' . $id . '" not in collection');
+        throw new NotInCollectionException('id "' . $id . '" not in collection');
     }
 
     protected function getObjectIdByIndex($index)
@@ -154,4 +159,29 @@ trait IdCollectionTrait
         return false;
     }
 
+    protected function _updateId($before, $after)
+    {
+        $before = IdHelper::formatId($before);
+        $after = IdHelper::formatId($after);
+
+        $this->_hashMap = self::updateCollectionId($this->_hashMap, $before, $after);
+    }
+
+    protected static function updateCollectionId($collection, $before, $after)
+    {
+
+        if (!isset($collection[$before])) {
+
+            throw new \Exception('Unable to update id from "' . $before . '" to "' . $after . '", the before id does not exist in collection (available: ' . implode(', ', $collection) . ')');
+        }
+        if (isset($collection[$after])) {
+            throw new \Exception('Unable to update id from "' . $before . '" to "' . $after . '", the after id already exist in collection (available: ' . implode(', ', $collection) . ')');
+        }
+
+        $keys = array_keys($collection);
+        $keys[array_search($before, $keys)] = $after;
+
+        return array_combine($keys, $collection);
+
+    }
 }

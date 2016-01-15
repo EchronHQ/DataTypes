@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace DataTypes;
 
 use DataTypes\Helper\IdHelper;
@@ -39,7 +40,6 @@ class BasicCollection
         $this->_currentKeyIndex++;
     }
 
-
     /**
      * (PHP 5 &gt;= 5.0.0)<br/>
      * Return the key of the current element
@@ -48,7 +48,7 @@ class BasicCollection
      */
     public function key()
     {
-       
+
         if ($this->_currentKeyIndex === null) {
             return null;
         }

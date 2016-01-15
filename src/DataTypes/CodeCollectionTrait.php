@@ -1,6 +1,9 @@
 <?php
+declare(strict_types = 1);
 namespace DataTypes;
 
+use DataTypes\Exception\NotInCollectionException;
+use DataTypes\Exception\ObjectAlreadyInCollectionException;
 use DataTypes\Helper\IdHelper;
 
 trait CodeCollectionTrait
@@ -12,29 +15,29 @@ trait CodeCollectionTrait
     protected $code_max_length = -1;
     private $codeHashMap = [];
 
-    public function getCodes()
+    public function getCodes():array
     {
         return array_keys($this->codeHashMap);
     }
 
-    protected function put($id, $code, $object)
+    protected function put($id, string $code, $object)
     {
         if ($this->hasCode($code)) {
-            throw new \Exception('Unable to add object to collection, code "' . $code . '" already in collection');
+            throw new ObjectAlreadyInCollectionException('Unable to add object to collection, code "' . $code . '" already in collection');
         }
 
         $index = $this->putByKey($id, $object);
 
-        $code = IdHelper::formatId($code);
+        $code = IdHelper::formatId($code, $this->allowSlashInCode());
 
         $this->setObjectIndexByCode($code, $index);
 
         return $index;
     }
 
-    protected function hasCode($code)
+    protected function hasCode(string $code)
     {
-        $code = IdHelper::formatId($code);
+        $code = IdHelper::formatId($code, $this->allowSlashInCode(), $this->code_max_length);
 
         if (isset($this->codeHashMap[$code])) {
             return true;
@@ -43,12 +46,17 @@ trait CodeCollectionTrait
         return false;
     }
 
+    protected function allowSlashInCode():bool
+    {
+        return false;
+    }
+
     protected function setObjectIndexByCode($code, $index)
     {
         $this->codeHashMap[$code] = $index;
     }
 
-    protected function deleteById($key)
+    protected function deleteById(string $key):bool
     {
 
         $key = IdHelper::formatId($key);
@@ -77,9 +85,9 @@ trait CodeCollectionTrait
         return array_search($index, $this->codeHashMap);
     }
 
-    protected function getByCode($code)
+    protected function getByCode(string $code)
     {
-        $code = IdHelper::formatId($code);
+        $code = IdHelper::formatId($code, $this->allowSlashInCode(), $this->code_max_length);
 
         if (isset($this->codeHashMap[$code])) {
             $index = $this->codeHashMap[$code];
@@ -89,13 +97,13 @@ trait CodeCollectionTrait
             }
         }
 
-        throw new \Exception('No item with code "' . $code . '" not in collection');
+        throw new NotInCollectionException('No item with code "' . $code . '" not in collection');
 
     }
 
-    protected function deleteByCode($code)
+    protected function deleteByCode(string $code):bool
     {
-        $code = IdHelper::formatId($code);
+        $code = IdHelper::formatId($code, $this->allowSlashInCode());
 
         $index = $this->getObjectIndexByCode($code);
         if ($index !== null) {
@@ -116,9 +124,9 @@ trait CodeCollectionTrait
         return false;
     }
 
-    protected function getObjectIndexByCode($code)
+    protected function getObjectIndexByCode(string $code)
     {
-        $code = IdHelper::formatId($code);
+        $code = IdHelper::formatId($code, $this->allowSlashInCode(), $this->code_max_length);
 
         if (isset($this->codeHashMap[$code])) {
             return $this->codeHashMap[$code];
@@ -127,9 +135,13 @@ trait CodeCollectionTrait
         return null;
     }
 
-    protected function allowSlashInCode()
+    protected function updateCode($before, $after)
     {
-        return false;
+
+        $before = IdHelper::formatId($before, $this->allowSlashInCode());
+        $after = IdHelper::formatId($after, $this->allowSlashInCode());
+
+        $this->codeHashMap = $this->updateCollectionId($this->codeHashMap, $before, $after);
     }
 
 }

@@ -1,8 +1,10 @@
 <?php
+declare(strict_types = 1);
 namespace DataTypes;
 
-use DataTypes\Exceptions\InvalidCodeException;
+use DataTypes\Exception\InvalidKeyException;
 use DataTypes\Helper\IdHelper;
+use DataTypes\Observable\Context\PropertyChangeContext;
 
 class IdCodeObject extends IdObject
 {
@@ -28,11 +30,12 @@ class IdCodeObject extends IdObject
     public function setCode($code)
     {
         if (!is_string($code) && !is_int($code)) {
-            throw new InvalidCodeException('Code must be string or int given');
+            throw new InvalidKeyException('Code must be string or int, `' . get_type($code) . '` given');
         }
+        $before = $this->getCode();
+        $this->code = IdHelper::formatId($code, false, $this->code_max_length);
 
-        $this->code = IdHelper::formatId($code);
-
+        $this->notify(new PropertyChangeContext('code', $before, $this->getCode()));
     }
 
 }

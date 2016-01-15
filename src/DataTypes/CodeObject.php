@@ -1,7 +1,8 @@
 <?php
+declare(strict_types = 1);
 namespace DataTypes;
 
-use DataTypes\Exceptions\InvalidCodeException;
+use DataTypes\Exception\InvalidKeyException;
 use DataTypes\Helper\IdHelper;
 
 class CodeObject extends IdObject
@@ -23,7 +24,7 @@ class CodeObject extends IdObject
     public function setCode($code)
     {
         if (!is_string($code) && !is_int($code)) {
-            throw new InvalidCodeException('Code must be string');
+            throw new InvalidKeyException('Code must be string');
         }
         $this->code = IdHelper::formatId($code);
     }
