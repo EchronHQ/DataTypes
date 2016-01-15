@@ -11,15 +11,6 @@ abstract class IdCodeObjectCollection extends IdCodeCollection implements Observ
 {
 
     //TODO: make this protected
-    public function add(IdCodeObject $object)
-    {
-
-        $index = $this->put($object->getId(), $object->getCode(), $object);
-        $object->attach($this);
-
-        return $index;
-    }
-
     public function update(Observable $subject, Context $context)
     {
 
@@ -34,5 +25,14 @@ abstract class IdCodeObjectCollection extends IdCodeCollection implements Observ
                     break;
             }
         }
+    }
+
+    protected function addIdCodeObject(IdCodeObject $object)
+    {
+
+        $index = $this->put($object->getId(), $object->getCode(), $object);
+        $object->attach($this);
+
+        return $index;
     }
 }

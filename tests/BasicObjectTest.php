@@ -1,18 +1,26 @@
 <?php
+declare(strict_types = 1);
 
-class BasicObjectTest extends PHPUnit_Framework_TestCase
+
+class BasicObjectTest extends \PHPUnit_Framework_TestCase
 {
-    public function testGetMethod()
+    public function testSetUndefinedProperty()
     {
-        $this->setExpectedException(Exception::class);
-        $basicObject = new \DataTypes\BasicObject();
-        $data = $basicObject->useGetMethod;;
+        $this->setExpectedException('\Exception');
+        $object = new \DataTypes\BasicObject();
+        /** @noinspection PhpUndefinedFieldInspection */
+        $object->property = 'value';
+
     }
 
-    public function testSetMethod()
+    public function testGetUndefinedProperty()
     {
-        $this->setExpectedException(Exception::class);
-        $basicObject = new \DataTypes\BasicObject();
-        $basicObject->useSetMethod = 12;
+        $this->setExpectedException('\Exception');
+        $object = new \DataTypes\BasicObject();
+        /** @noinspection PhpUndefinedFieldInspection */
+        /** @noinspection PhpUnusedLocalVariableInspection */
+        $value = $object->property;
     }
+
+   
 }

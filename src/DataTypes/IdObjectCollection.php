@@ -22,12 +22,7 @@ class IdObjectCollection extends IdCollection implements Observer
 
     public function delete($id)
     {
-        return parent::deleteById($id);
-    }
-
-    public function getIds()
-    {
-        return parent::_getIds();
+        return parent::removeById($id);
     }
 
     /**
@@ -50,7 +45,7 @@ class IdObjectCollection extends IdCollection implements Observer
 
     }
 
-    protected function addObject(IdObject $item)
+    protected function addIdObject(IdObject $item)
     {
         $success = parent::put($item->getId(), $item);
         $item->attach($this);

@@ -20,6 +20,45 @@ trait CodeCollectionTrait
         return array_keys($this->codeHashMap);
     }
 
+    public final function removeByCode(string $code):bool
+    {
+        $code = IdHelper::formatId($code, $this->allowSlashInCode());
+
+        $index = $this->getObjectIndexByCode($code);
+        if ($index !== null) {
+            if (isset($this->_collection[$index])) {
+                unset($this->_collection[$index]);
+                unset($this->codeHashMap[$code]);
+
+                $key = $this->getObjectIdByIndex($index);
+                if ($key) {
+                    unset($this->_hashMap[$key]);
+                }
+                $this->length--;
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected function allowSlashInCode():bool
+    {
+        return false;
+    }
+
+    protected function getObjectIndexByCode(string $code)
+    {
+        $code = IdHelper::formatId($code, $this->allowSlashInCode(), $this->code_max_length);
+
+        if (isset($this->codeHashMap[$code])) {
+            return $this->codeHashMap[$code];
+        }
+
+        return null;
+    }
+
     protected function put($id, string $code, $object)
     {
         if ($this->hasCode($code)) {
@@ -35,7 +74,7 @@ trait CodeCollectionTrait
         return $index;
     }
 
-    protected function hasCode(string $code)
+    public function hasCode(string $code):bool
     {
         $code = IdHelper::formatId($code, $this->allowSlashInCode(), $this->code_max_length);
 
@@ -46,25 +85,20 @@ trait CodeCollectionTrait
         return false;
     }
 
-    protected function allowSlashInCode():bool
-    {
-        return false;
-    }
-
     protected function setObjectIndexByCode($code, $index)
     {
         $this->codeHashMap[$code] = $index;
     }
 
-    protected function deleteById(string $key):bool
+    public final function removeById(int $id):bool
     {
 
-        $key = IdHelper::formatId($key);
-        $index = $this->getObjectIndexById($key);
+        $id = IdHelper::formatId($id);
+        $index = $this->getObjectIndexById($id);
         if ($index !== null) {
             if (isset($this->_collection[$index])) {
                 unset($this->_collection[$index]);
-                unset($this->_hashMap[$key]);
+                unset($this->_hashMap[$id]);
 
                 $code = $this->getObjectCodeByIndex($index);
                 if ($code) {
@@ -99,40 +133,6 @@ trait CodeCollectionTrait
 
         throw new NotInCollectionException('No item with code "' . $code . '" not in collection');
 
-    }
-
-    protected function deleteByCode(string $code):bool
-    {
-        $code = IdHelper::formatId($code, $this->allowSlashInCode());
-
-        $index = $this->getObjectIndexByCode($code);
-        if ($index !== null) {
-            if (isset($this->_collection[$index])) {
-                unset($this->_collection[$index]);
-                unset($this->codeHashMap[$code]);
-
-                $key = $this->getObjectIdByIndex($index);
-                if ($key) {
-                    unset($this->_hashMap[$key]);
-                }
-                $this->length--;
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    protected function getObjectIndexByCode(string $code)
-    {
-        $code = IdHelper::formatId($code, $this->allowSlashInCode(), $this->code_max_length);
-
-        if (isset($this->codeHashMap[$code])) {
-            return $this->codeHashMap[$code];
-        }
-
-        return null;
     }
 
     protected function updateCode($before, $after)

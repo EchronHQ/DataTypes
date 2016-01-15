@@ -27,6 +27,7 @@ trait IdCollectionTrait
      * Return the current element
      * @link http://php.net/manual/en/iterator.current.php
      * @return mixed Can return any type.
+     * @deprecated
      */
     public function current()
     {
@@ -78,9 +79,16 @@ trait IdCollectionTrait
         reset($this->_collection);
     }
 
-    protected function _getIds():array
+    //TODO: every implementing class should have the function current, force this
+
+    public final function getIds():array
     {
         return array_keys($this->_hashMap);
+    }
+
+    protected function _current()
+    {
+        return current($this->_collection);
     }
 
     protected function put($id, $value)
@@ -100,7 +108,7 @@ trait IdCollectionTrait
         return $index;
     }
 
-    protected function hasId($id):bool
+    public function hasId($id):bool
     {
         $id = IdHelper::formatId($id);
 
@@ -139,7 +147,7 @@ trait IdCollectionTrait
         return array_search($index, $this->_hashMap);
     }
 
-    protected function deleteById($id)
+    protected function removeById($id)
     {
         //TODO: update all hashmaps or not? or just remove the object from collection and the key from the hashmap (do we have 'holes' in our hashmap?)
 
