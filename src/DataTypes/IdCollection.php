@@ -6,12 +6,12 @@ class IdCollection extends BasicObject implements \Iterator, \Countable, \JsonSe
 {
     use IdCollectionTrait;
 
-    public function count()
+    public function count():int
     {
         return $this->getLength();
     }
 
-    function jsonSerialize()
+    function jsonSerialize():array
     {
         //TODO: good idea to remove keys?
         return array_values($this->_collection);

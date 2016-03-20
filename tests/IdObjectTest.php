@@ -18,4 +18,14 @@ class IdObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($obj->hasId());
 
     }
+
+    public function testObserver_NormalChange()
+    {
+
+    }
+
+    public function testObserver_Same()
+    {
+        
+    }
 }

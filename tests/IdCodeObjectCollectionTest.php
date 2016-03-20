@@ -75,16 +75,16 @@ class IdCodeObjectCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(IdCodeObjectImplementation::class, $collection->getByCode('object_code'));
 
         $object->setId(10);
-        $object->setCode('object_code');
+        $object->setCode('object_code2');
 
         $this->assertFalse($collection->hasId(20));
         $this->assertFalse($collection->hasCode('object_code'));
 
         $this->assertInstanceOf(IdCodeObjectImplementation::class, $collection->getById(10));
-        $this->assertInstanceOf(IdCodeObjectImplementation::class, $collection->getByCode('object_code'));
+        $this->assertInstanceOf(IdCodeObjectImplementation::class, $collection->getByCode('object_code2'));
 
         $this->assertEquals([10], $collection->getIds());
-        $this->assertEquals(['object_code'], $collection->getCodes());
+        $this->assertEquals(['object_code2'], $collection->getCodes());
 
     }
 }

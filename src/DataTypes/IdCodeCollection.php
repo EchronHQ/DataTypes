@@ -6,12 +6,12 @@ class IdCodeCollection extends BasicObject implements \Iterator, \Countable, \Js
 {
     use CodeCollectionTrait;
 
-    public function count()
+    public function count():int
     {
         return $this->getLength();
     }
 
-    function jsonSerialize()
+    function jsonSerialize():array
     {
         //TODO: good idea to remove keys?
         $data = [];

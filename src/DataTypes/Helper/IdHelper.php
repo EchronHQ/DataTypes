@@ -6,7 +6,7 @@ use DataTypes\Exception\InvalidKeyException;
 
 class IdHelper
 {
-    public static function formatId($id, bool $allowSlash = false, int $maxLength = 0):string
+    public static function formatKey(string $id, bool $allowSlash = false, int $maxLength = 0):string
     {
         //TODO: only allow int?
         if (!is_string($id) && !is_int($id)) {

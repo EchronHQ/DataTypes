@@ -6,14 +6,14 @@ class PropertyChangeContext extends Context
 {
     private $property, $before, $after;
 
-    public function __construct($property, $before, $after)
+    public function __construct(string $property, $before, $after)
     {
         $this->property = $property;
         $this->before = $before;
         $this->after = $after;
     }
 
-    public function getProperty()
+    public function getProperty():string
     {
         return $this->property;
     }

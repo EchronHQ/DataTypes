@@ -20,7 +20,6 @@ abstract class IdCodeObjectCollection extends IdCodeCollection implements Observ
                     $this->_updateId($context->getBefore(), $context->getAfter());
                     break;
                 case 'code':
-
                     $this->updateCode($context->getBefore(), $context->getAfter());
                     break;
             }

@@ -12,7 +12,7 @@ class BasicObject
      * @deprecated
      * @access private
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         throw new \Exception('Cannot get new property "' . $name . '" to instance of "' . get_class($this) . '"');
     }
@@ -24,12 +24,12 @@ class BasicObject
      * @deprecated
      * @access private
      */
-    public function __set($name, $value)
+    public function __set(string $name, $value)
     {
         throw new \Exception('Cannot set new property "' . $name . '" to instance of "' . get_class($this) . '"');
     }
 
-    function jsonSerialize()
+    function jsonSerialize():array
     {
         return get_object_vars($this);
     }

@@ -4,7 +4,6 @@ namespace DataTypes;
 
 use DataTypes\Exception\IdAlreadyInCollectionException;
 use DataTypes\Exception\NotInCollectionException;
-use DataTypes\Helper\IdHelper;
 
 trait IdCollectionTrait
 {
@@ -30,6 +29,13 @@ trait IdCollectionTrait
      * @deprecated
      */
     public function current()
+    {
+        // throw new \Exception('This method should be implemented');
+
+        return $this->_current();
+    }
+
+    protected function _current()
     {
         return current($this->_collection);
     }
@@ -63,10 +69,12 @@ trait IdCollectionTrait
      * @return boolean The return value will be casted to boolean and then evaluated.
      * Returns true on success or false on failure.
      */
-    public function valid()
+    public function valid():bool
     {
         return !!current($this->_collection);
     }
+
+    //TODO: every implementing class should have the function current, force this
 
     /**
      * (PHP 5 &gt;= 5.0.0)<br/>
@@ -79,19 +87,12 @@ trait IdCollectionTrait
         reset($this->_collection);
     }
 
-    //TODO: every implementing class should have the function current, force this
-
     public final function getIds():array
     {
         return array_keys($this->_hashMap);
     }
 
-    protected function _current()
-    {
-        return current($this->_collection);
-    }
-
-    protected function put($id, $value)
+    protected function put(int $id, $value)
     {
 
         if ($this->hasId($id)) {
@@ -101,21 +102,19 @@ trait IdCollectionTrait
 
         $this->_collection[$index] = $value;
 
-        $id = IdHelper::formatId($id);
         $this->_hashMap[$id] = $index;
         $this->length++;
 
         return $index;
     }
 
-    public function hasId($id):bool
+    public function hasId(int $id):bool
     {
-        $id = IdHelper::formatId($id);
 
         return isset($this->_hashMap[$id]);
     }
 
-    protected function getById($id)
+    protected function getById(int $id)
     {
         if (!$this->hasId($id)) {
 
@@ -132,9 +131,9 @@ trait IdCollectionTrait
 
     }
 
-    protected function getObjectIndexById($id)
+    protected function getObjectIndexById(int $id):int
     {
-        $id = IdHelper::formatId($id);
+
         if (isset($this->_hashMap[$id])) {
             return $this->_hashMap[$id];
         }
@@ -142,16 +141,14 @@ trait IdCollectionTrait
         throw new NotInCollectionException('id "' . $id . '" not in collection');
     }
 
-    protected function getObjectIdByIndex($index)
+    protected function getObjectIdByIndex(int $index):int
     {
         return array_search($index, $this->_hashMap);
     }
 
-    protected function removeById($id)
+    protected function removeById(int $id)
     {
         //TODO: update all hashmaps or not? or just remove the object from collection and the key from the hashmap (do we have 'holes' in our hashmap?)
-
-        $id = IdHelper::formatId($id);
 
         if ($this->hasId($id)) {
             $index = $this->getObjectIndexById($id);
@@ -167,10 +164,8 @@ trait IdCollectionTrait
         return false;
     }
 
-    protected function _updateId($before, $after)
+    protected function _updateId(int $before, int $after)
     {
-        $before = IdHelper::formatId($before);
-        $after = IdHelper::formatId($after);
 
         $this->_hashMap = self::updateCollectionId($this->_hashMap, $before, $after);
     }
