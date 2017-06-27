@@ -13,7 +13,7 @@ class IdCodeObjectCollectionImplementation extends \DataTypes\IdCodeObjectCollec
         return parent::_current();
     }
 
-    public function getById(int $id):IdCodeObjectImplementation
+    public function getById(string $id):IdCodeObjectImplementation
     {
         return parent::getById($id);
     }

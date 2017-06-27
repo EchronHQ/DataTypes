@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace DataTypes;
 
 use DataTypes\Exception\IdAlreadyInCollectionException;
@@ -11,12 +12,12 @@ trait IdCollectionTrait
     protected $_collection = [];
     private $length = 0;
 
-    public function length():int
+    public function length(): int
     {
         return $this->getLength();
     }
 
-    protected function getLength():int
+    protected function getLength(): int
     {
         return $this->length;
     }
@@ -69,7 +70,7 @@ trait IdCollectionTrait
      * @return boolean The return value will be casted to boolean and then evaluated.
      * Returns true on success or false on failure.
      */
-    public function valid():bool
+    public function valid(): bool
     {
         return !!current($this->_collection);
     }
@@ -87,12 +88,12 @@ trait IdCollectionTrait
         reset($this->_collection);
     }
 
-    public final function getIds():array
+    public final function getIds(): array
     {
         return array_keys($this->_hashMap);
     }
 
-    protected function put(int $id, $value)
+    protected function put(string $id, $value)
     {
 
         if ($this->hasId($id)) {
@@ -108,13 +109,13 @@ trait IdCollectionTrait
         return $index;
     }
 
-    public function hasId(int $id):bool
+    public function hasId(string $id): bool
     {
 
         return isset($this->_hashMap[$id]);
     }
 
-    protected function getById(int $id)
+    protected function getById(string $id)
     {
         if (!$this->hasId($id)) {
 
@@ -131,7 +132,7 @@ trait IdCollectionTrait
 
     }
 
-    protected function getObjectIndexById(int $id):int
+    protected function getObjectIndexById(string $id): int
     {
 
         if (isset($this->_hashMap[$id])) {
@@ -141,12 +142,12 @@ trait IdCollectionTrait
         throw new NotInCollectionException('id "' . $id . '" not in collection');
     }
 
-    protected function getObjectIdByIndex(int $index):int
+    protected function getObjectIdByIndex(string $index): int
     {
         return array_search($index, $this->_hashMap);
     }
 
-    protected function removeById(int $id)
+    protected function removeById(string $id)
     {
         //TODO: update all hashmaps or not? or just remove the object from collection and the key from the hashmap (do we have 'holes' in our hashmap?)
 
@@ -164,13 +165,13 @@ trait IdCollectionTrait
         return false;
     }
 
-    protected function _updateId(int $before, int $after)
+    protected function _updateId(string $before, string $after)
     {
 
         $this->_hashMap = self::updateCollectionId($this->_hashMap, $before, $after);
     }
 
-    protected static function updateCollectionId($collection, $before, $after)
+    protected static function updateCollectionId(array $collection, string $before, string $after)
     {
 
         if (!isset($collection[$before])) {

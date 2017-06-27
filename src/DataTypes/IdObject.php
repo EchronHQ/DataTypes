@@ -12,7 +12,7 @@ class IdObject extends BasicObject implements Observable
     protected $id_max_length = -1;
     private $id;
 
-    public function __construct(int $id = null)
+    public function __construct(string $id = null)
     {
         if ($id !== null) {
             $this->setId($id);
@@ -20,12 +20,12 @@ class IdObject extends BasicObject implements Observable
 
     }
 
-    public function getId():int
+    public function getId():string
     {
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setId(string $id)
     {
         if ($id !== $this->id) {
             $before = $this->id;

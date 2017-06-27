@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace DataTypes;
 
 use DataTypes\Observable\Context\Context;
@@ -10,17 +11,17 @@ use DataTypes\Observable\Observer;
 class IdObjectCollection extends IdCollection implements Observer
 {
 
-    public function getById($id)
+    public function getById(string $id)
     {
         return parent::getById($id);
     }
 
-    public function hasId($id):bool
+    public function hasId(string $id): bool
     {
         return parent::hasId($id);
     }
 
-    public function delete($id)
+    public function delete(string $id)
     {
         return parent::removeById($id);
     }

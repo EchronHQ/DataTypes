@@ -10,7 +10,7 @@ class IdCodeObject extends IdObject
     protected $code_max_length = -1;
     private $code;
 
-    public function __construct(int $id, string $code)
+    public function __construct(string $id, string $code)
     {
 
         parent::__construct($id);
