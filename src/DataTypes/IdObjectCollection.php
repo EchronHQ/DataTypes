@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace DataTypes;
+namespace Echron\DataTypes;
 
-use DataTypes\Observable\Context\Context;
-use DataTypes\Observable\Context\PropertyChangeContext;
-use DataTypes\Observable\Observable;
-use DataTypes\Observable\Observer;
+use Echron\DataTypes\Observable\Context\Context;
+use Echron\DataTypes\Observable\Context\PropertyChangeContext;
+use Echron\DataTypes\Observable\Observable;
+use Echron\DataTypes\Observable\Observer;
 
 class IdObjectCollection extends BasicCollection implements Observer
 {

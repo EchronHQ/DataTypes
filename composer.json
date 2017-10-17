@@ -14,7 +14,7 @@
   },
   "autoload": {
     "psr-4": {
-      "DataTypes\\": "src"
+      "Echron\\DataTypes\\": "src/DataTypes"
     }
   },
   "require-dev": {

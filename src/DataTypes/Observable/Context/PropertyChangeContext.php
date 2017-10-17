@@ -1,6 +1,7 @@
 <?php
-declare(strict_types = 1);
-namespace DataTypes\Observable\Context;
+declare(strict_types=1);
+
+namespace Echron\DataTypes\Observable\Context;
 
 class PropertyChangeContext extends Context
 {
@@ -13,7 +14,7 @@ class PropertyChangeContext extends Context
         $this->after = $after;
     }
 
-    public function getProperty():string
+    public function getProperty(): string
     {
         return $this->property;
     }

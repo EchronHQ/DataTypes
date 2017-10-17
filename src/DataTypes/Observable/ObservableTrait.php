@@ -1,8 +1,9 @@
 <?php
-declare(strict_types = 1);
-namespace DataTypes\Observable;
+declare(strict_types=1);
 
-use DataTypes\Observable\Context\Context;
+namespace Echron\DataTypes\Observable;
+
+use Echron\DataTypes\Observable\Context\Context;
 
 trait ObservableTrait
 {

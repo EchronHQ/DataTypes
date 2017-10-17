@@ -1,9 +1,8 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
-class TypedEnumImpl extends \DataTypes\TypedEnum
+class TypedEnumImpl extends \Echron\DataTypes\TypedEnum
 {
-
 
     public static function OptionZero()
     {
@@ -14,6 +13,5 @@ class TypedEnumImpl extends \DataTypes\TypedEnum
     {
         return self::_create(1);
     }
-
 
 }

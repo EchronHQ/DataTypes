@@ -1,6 +1,6 @@
 <?php
 
-namespace DataTypes;
+namespace Echron\DataTypes;
 
 class KeyValueStore
 {

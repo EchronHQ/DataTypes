@@ -1,12 +1,13 @@
 <?php
-declare(strict_types = 1);
-namespace DataTypes\Helper;
+declare(strict_types=1);
 
-use DataTypes\Exception\InvalidKeyException;
+namespace Echron\DataTypes\Helper;
+
+use Echron\DataTypes\Exception\InvalidKeyException;
 
 class IdHelper
 {
-    public static function formatKey(string $id, bool $allowSlash = false, int $maxLength = 0):string
+    public static function formatKey(string $id, bool $allowSlash = false, int $maxLength = 0): string
     {
         //TODO: only allow int?
         if (!is_string($id) && !is_int($id)) {
@@ -72,7 +73,7 @@ class IdHelper
         return $id;
     }
 
-    private static function getObjectType($var):string
+    private static function getObjectType($var): string
     {
         $type = gettype($var);
         if ($type === 'object') {

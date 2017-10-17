@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace DataTypes;
+namespace Echron\DataTypes;
 
 abstract class BasicCollection implements \Iterator, \Countable, \JsonSerializable
 {

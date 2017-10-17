@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace DataTypes;
+namespace Echron\DataTypes;
 
-use DataTypes\Helper\IdHelper;
-use DataTypes\Observable\Context\PropertyChangeContext;
+use Echron\DataTypes\Helper\IdHelper;
+use Echron\DataTypes\Observable\Context\PropertyChangeContext;
 
 class IdCodeObject extends IdObject
 {

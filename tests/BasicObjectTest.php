@@ -6,7 +6,7 @@ class BasicObjectTest extends \PHPUnit\Framework\TestCase
     public function testSetUndefinedProperty()
     {
         $this->expectException('\Exception');
-        $object = new \DataTypes\BasicObject();
+        $object = new \Echron\DataTypes\BasicObject();
         /** @noinspection PhpUndefinedFieldInspection */
         $object->property = 'value';
 
@@ -15,7 +15,7 @@ class BasicObjectTest extends \PHPUnit\Framework\TestCase
     public function testGetUndefinedProperty()
     {
         $this->expectException('\Exception');
-        $object = new \DataTypes\BasicObject();
+        $object = new \Echron\DataTypes\BasicObject();
         /** @noinspection PhpUndefinedFieldInspection */
         /** @noinspection PhpUnusedLocalVariableInspection */
         $value = $object->property;

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace DataTypes;
+namespace Echron\DataTypes;
 
-use DataTypes\Observable\Context\PropertyChangeContext;
-use DataTypes\Observable\Observable;
-use DataTypes\Observable\ObservableTrait;
+use Echron\DataTypes\Observable\Context\PropertyChangeContext;
+use Echron\DataTypes\Observable\Observable;
+use Echron\DataTypes\Observable\ObservableTrait;
 
 class IdObject extends BasicObject implements Observable
 {

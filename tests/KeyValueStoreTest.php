@@ -8,7 +8,7 @@ class KeyValueStoreTest extends \PHPUnit\Framework\TestCase
         $key = 'key';
         $value = 'value';
 
-        $store = new \DataTypes\KeyValueStore();
+        $store = new \Echron\DataTypes\KeyValueStore();
         $store->add($key, $value);
 
         $this->assertTrue($store->hasKey($key));
@@ -23,7 +23,7 @@ class KeyValueStoreTest extends \PHPUnit\Framework\TestCase
         $key = 'key';
         $value = 'value';
 
-        $store = new \DataTypes\KeyValueStore();
+        $store = new \Echron\DataTypes\KeyValueStore();
         $store->add($key, $value);
 
         $store->removeByKey($key);
@@ -40,7 +40,7 @@ class KeyValueStoreTest extends \PHPUnit\Framework\TestCase
         $key = 'key';
         $value = 'value';
 
-        $store = new \DataTypes\KeyValueStore();
+        $store = new \Echron\DataTypes\KeyValueStore();
         $store->add($key, $value);
 
         $store->removeByValue($value);
