@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace DataTypes;
 
 use DataTypes\Helper\IdHelper;
@@ -10,19 +11,19 @@ class IdCodeObject extends IdObject
     protected $code_max_length = -1;
     private $code;
 
-    public function __construct(string $id, string $code)
+    public function __construct(int $id, string $code)
     {
 
         parent::__construct($id);
         $this->setCode($code);
     }
 
-    public function __toString():string
+    public function __toString(): string
     {
         return $this->getCode() . ' (id: ' . $this->getId() . ')';
     }
 
-    public function getCode():string
+    public function getCode(): string
     {
         return $this->code;
     }

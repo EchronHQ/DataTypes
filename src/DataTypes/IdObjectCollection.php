@@ -8,34 +8,54 @@ use DataTypes\Observable\Context\PropertyChangeContext;
 use DataTypes\Observable\Observable;
 use DataTypes\Observable\Observer;
 
-class IdObjectCollection extends IdCollection implements Observer
+class IdObjectCollection extends BasicCollection implements Observer
 {
 
-    public function getById(string $id)
+    private $idValueStore;
+
+    public function __construct()
     {
-        return parent::getById($id);
+        parent::__construct();
+        $this->idValueStore = new KeyValueStore();
+
     }
 
-    public function hasId(string $id): bool
+    public function add(IdObject $idCodeObject)
     {
-        return parent::hasId($id);
+        $index = $this->addToCollection($idCodeObject);
+        $this->idValueStore->add($idCodeObject->getId(), $index);
+
     }
 
-    public function delete(string $id)
+    public function removeById(int $id)
     {
-        return parent::removeById($id);
+        $index = $this->idValueStore->getValueByKey($id);
+
+        $this->idValueStore->removeByValue($index);
+
+        $this->removeFromCollection($index);
     }
 
-    /**
-     * Receive update from subject
-     *
-     * @param Observable $subject
-     * @param $context
-     * @return mixed
-     */
+    public function getById(int $id)
+    {
+        $index = $this->idValueStore->getValueByKey($id);
+
+        return $this->getByIndex($index);
+    }
+
+    public function hasId(int $id): bool
+    {
+        return $this->idValueStore->hasKey($id);
+    }
+
+    public function getIds(): array
+    {
+        return $this->idValueStore->getKeys();
+    }
+
     public function update(Observable $subject, Context $context)
     {
-
+        throw new \Exception('Not implemented');
         if ($context instanceof PropertyChangeContext) {
             switch ($context->getProperty()) {
                 case 'id':
@@ -46,11 +66,4 @@ class IdObjectCollection extends IdCollection implements Observer
 
     }
 
-    protected function addIdObject(IdObject $item)
-    {
-        $success = parent::put($item->getId(), $item);
-        $item->attach($this);
-
-        return $success;
-    }
 }

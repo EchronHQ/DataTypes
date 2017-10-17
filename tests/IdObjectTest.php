@@ -1,20 +1,18 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
-require 'impl/IdObjectImplementation.php';
-
-class IdObjectTest extends \PHPUnit_Framework_TestCase
+class IdObjectTest extends \PHPUnit\Framework\TestCase
 {
     public function testWithId()
     {
-        $obj = new \IdObjectImplementation(12);
+        $obj = new \DataTypes\IdObject(12);
         $this->assertTrue($obj->hasId());
         $this->assertEquals(12, $obj->getId());
     }
 
     public function testWithoutId()
     {
-        $obj = new \IdObjectImplementation();
+        $obj = new \DataTypes\IdObject();
         $this->assertFalse($obj->hasId());
 
     }
@@ -26,6 +24,6 @@ class IdObjectTest extends \PHPUnit_Framework_TestCase
 
     public function testObserver_Same()
     {
-        
+
     }
 }

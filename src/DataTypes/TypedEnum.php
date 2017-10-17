@@ -47,7 +47,7 @@ abstract class TypedEnum extends BasicObject
         return self::_fromGetter('getName', $value);
     }
 
-    protected static function _create($value):TypedEnum
+    protected static function _create($value): TypedEnum
     {
         $value = (string)$value;
         if (self::$instancedValues === null) {
@@ -74,12 +74,12 @@ abstract class TypedEnum extends BasicObject
         return self::$instancedValues[$className][$value];
     }
 
-    public function getValue():string
+    public function getValue(): string
     {
         return $this->value;
     }
 
-    public function getName():string
+    public function getName(): string
     {
         return $this->name;
     }

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace DataTypes;
 
 use DataTypes\Observable\Context\PropertyChangeContext;
@@ -10,9 +11,9 @@ class IdObject extends BasicObject implements Observable
 {
     use ObservableTrait;
     protected $id_max_length = -1;
-    private $id;
+    private $id = -1;
 
-    public function __construct(string $id = null)
+    public function __construct(int $id = null)
     {
         if ($id !== null) {
             $this->setId($id);
@@ -20,12 +21,12 @@ class IdObject extends BasicObject implements Observable
 
     }
 
-    public function getId():string
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId(string $id)
+    public function setId(int $id)
     {
         if ($id !== $this->id) {
             $before = $this->id;
@@ -36,9 +37,9 @@ class IdObject extends BasicObject implements Observable
 
     }
 
-    public function hasId():bool
+    public function hasId(): bool
     {
-        return $this->id !== null;
+        return $this->id !== -1;
 
     }
 

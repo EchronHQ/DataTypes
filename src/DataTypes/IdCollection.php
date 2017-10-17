@@ -1,19 +1,49 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace DataTypes;
 
-class IdCollection extends BasicObject implements \Iterator, \Countable, \JsonSerializable
+class IdCollection extends BasicCollection
 {
-    use IdCollectionTrait;
+    private $idValueStore;
 
-    public function count():int
+    public function __construct()
     {
-        return $this->getLength();
+        parent::__construct();
+        $this->idValueStore = new KeyValueStore();
+
     }
 
-    function jsonSerialize():array
+    public function add(int $id, $value)
     {
-        //TODO: good idea to remove keys?
-        return array_values($this->_collection);
+        $index = $this->addToCollection($value);
+        $this->idValueStore->add($id, $index);
+
+    }
+
+    public function removeById(int $id)
+    {
+        $index = $this->idValueStore->getValueByKey($id);
+
+        $this->idValueStore->removeByValue($index);
+
+        $this->removeFromCollection($index);
+    }
+
+    public function getById(int $id)
+    {
+        $index = $this->idValueStore->getValueByKey($id);
+
+        return $this->getByIndex($index);
+    }
+
+    public function hasId(int $id): bool
+    {
+        return $this->idValueStore->hasKey($id);
+    }
+
+    public function getIds(): array
+    {
+        return $this->idValueStore->getKeys();
     }
 }
