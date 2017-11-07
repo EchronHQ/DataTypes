@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Echron\DataTypes;
 
-use Echron\DataTypes\Helper\IdHelper;
+use Echron\DataTypes\Helper\KeyHelper;
 use Echron\DataTypes\Observable\Context\PropertyChangeContext;
 
 class IdCodeObject extends IdObject
@@ -31,7 +31,7 @@ class IdCodeObject extends IdObject
     public function setCode(string $code)
     {
         $before = $this->code;
-        $code = IdHelper::formatKey($code, false, $this->code_max_length);
+        $code = KeyHelper::formatKey($code, false, $this->code_max_length);
 
         if ($code !== $before) {
             $this->code = $code;

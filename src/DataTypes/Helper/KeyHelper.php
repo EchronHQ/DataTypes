@@ -5,7 +5,7 @@ namespace Echron\DataTypes\Helper;
 
 use Echron\DataTypes\Exception\InvalidKeyException;
 
-class IdHelper
+class KeyHelper
 {
     public static function formatKey(string $id, bool $allowSlash = false, int $maxLength = 0): string
     {
