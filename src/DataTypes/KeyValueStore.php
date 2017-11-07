@@ -11,7 +11,7 @@ class KeyValueStore
     private $hashMap = [];
     private $reversedHashMap = [];
 
-    private $normalizeKey = true;
+    private $normalizeKey = false;
 
     public function __construct(bool $normalizeKey = false)
     {
@@ -23,7 +23,7 @@ class KeyValueStore
         $this->reversedHashMap[$value] = $key;
 
         if ($this->normalizeKey) {
-            $key = KeyHelper::formatKey($key);
+            $key = KeyHelper::formatKey((string)$key);
         }
         $this->hashMap[$key] = $value;
 
@@ -32,7 +32,7 @@ class KeyValueStore
     public function getValueByKey($key)
     {
         if ($this->normalizeKey) {
-            $key = KeyHelper::formatKey($key);
+            $key = KeyHelper::formatKey((string)$key);
         }
         //TODO: isset or key_exists?
         if (!isset($this->hashMap[$key])) {
@@ -55,7 +55,7 @@ class KeyValueStore
     public function removeByKey($key)
     {
         if ($this->normalizeKey) {
-            $key = KeyHelper::formatKey($key);
+            $key = KeyHelper::formatKey((string)$key);
         }
         $value = $this->getValueByKey($key);
 
@@ -79,7 +79,7 @@ class KeyValueStore
     public function hasKey($key): bool
     {
         if ($this->normalizeKey) {
-            $key = KeyHelper::formatKey($key);
+            $key = KeyHelper::formatKey((string)$key);
         }
 
         return isset($this->hashMap[$key]);
