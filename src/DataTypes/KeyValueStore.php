@@ -11,9 +11,9 @@ class KeyValueStore
     private $hashMap = [];
     private $reversedHashMap = [];
 
-    private $normalizeKey = false;
+    private $normalizeKey = true;
 
-    public function __construct(bool $normalizeKey = false)
+    public function __construct(bool $normalizeKey = true)
     {
         $this->normalizeKey = $normalizeKey;
     }
@@ -66,6 +66,10 @@ class KeyValueStore
     public function removeByValue($value)
     {
         $key = $this->getKeyByValue($value);
+
+        if ($this->normalizeKey) {
+            $key = KeyHelper::formatKey((string)$key);
+        }
 
         unset($this->hashMap[$key]);
         unset($this->reversedHashMap[$value]);
