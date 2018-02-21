@@ -14,28 +14,29 @@ class IdCodeCollection extends BasicCollection
         parent::__construct();
         $this->idValueStore = new KeyValueStore();
         $this->codeValueStore = new KeyValueStore();
-
     }
 
     public function add(int $id, string $code, $value): int
     {
         $index = $this->addToCollection($value);
-        $this->idValueStore->add($id, $index);
-        $this->codeValueStore->add($code, $index);
+        if (!empty($id)) {
+            $this->idValueStore->add($id, $index);
+        }
+        if (!empty($code)) {
+            $this->codeValueStore->add($code, $index);
+        }
 
         return $index;
     }
 
     public function removeByCode(string $code)
     {
-
         $index = $this->codeValueStore->getValueByKey($code);
 
         $this->idValueStore->removeByValue($index);
         $this->codeValueStore->removeByValue($index);
 
         $this->removeFromCollection($index);
-
     }
 
     public function removeById(int $id)
