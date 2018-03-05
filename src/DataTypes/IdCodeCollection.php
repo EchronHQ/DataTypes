@@ -19,9 +19,9 @@ class IdCodeCollection extends BasicCollection
     public function add(int $id, string $code, $value): int
     {
         $index = $this->addToCollection($value);
-        if (!empty($id)) {
-            $this->idValueStore->add($id, $index);
-        }
+        //if (!empty($id)) {
+        $this->idValueStore->add($id, $index);
+        //}
         if (!empty($code)) {
             $this->codeValueStore->add($code, $index);
         }

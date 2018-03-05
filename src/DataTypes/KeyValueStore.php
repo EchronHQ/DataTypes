@@ -26,7 +26,6 @@ class KeyValueStore
             $key = KeyHelper::formatKey((string)$key);
         }
         $this->hashMap[$key] = $value;
-
     }
 
     public function getValueByKey($key)
@@ -35,7 +34,7 @@ class KeyValueStore
             $key = KeyHelper::formatKey((string)$key);
         }
         //TODO: isset or key_exists?
-        if (!isset($this->hashMap[$key])) {
+        if (!\key_exists($key, $this->hashMap)) {
             throw new NotInCollectionException('Key "' . $key . '" does not exist');
         }
 
@@ -45,8 +44,8 @@ class KeyValueStore
     public function getKeyByValue($value)
     {
         //TODO: isset or key_exists?
-        if (!isset($this->reversedHashMap[$value])) {
-            throw new NotInCollectionException('Value "' . $value . '" does not exist');
+        if (!\key_exists($value, $this->reversedHashMap)) {
+            throw new NotInCollectionException('Value "' . $value . '" does not exist (' . \implode(', ', $this->reversedHashMap) . ')');
         }
 
         return $this->reversedHashMap[$value];
@@ -86,7 +85,7 @@ class KeyValueStore
             $key = KeyHelper::formatKey((string)$key);
         }
 
-        return isset($this->hashMap[$key]);
+        return \key_exists($key, $this->hashMap);
     }
 }
 
