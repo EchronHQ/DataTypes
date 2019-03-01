@@ -7,21 +7,21 @@ use Echron\DataTypes\Exception\InvalidKeyException;
 
 class KeyHelper
 {
-    public static function formatKey(string $id, bool $allowSlash = false, int $maxLength = 0): string
+    public static function formatKey(string $key, bool $allowSlash = false, int $maxLength = 0): string
     {
         //TODO: only allow int?
-        if (!is_string($id) && !is_int($id)) {
-            if (is_array($id)) {
-                throw new InvalidKeyException('Id must be int or string, `' . self::getObjectType($id) . '` given (' . json_encode($id) . ') (' . json_encode(debug_backtrace()) . ')');
+        if (!is_string($key) && !is_int($key)) {
+            if (is_array($key)) {
+                throw new InvalidKeyException('Id must be int or string, `' . self::getObjectType($key) . '` given (' . json_encode($key) . ') (' . json_encode(debug_backtrace()) . ')');
             }
 
-            throw new InvalidKeyException('Id must be int or string, `' . self::getObjectType($id) . '` given');
+            throw new InvalidKeyException('Id must be int or string, `' . self::getObjectType($key) . '` given');
         }
 
         // $id = iconv("UTF-8", "UTF-8//IGNORE", $id);
         //$id = mb_convert_encoding($id, 'UTF-8', 'UTF-8');
         //$id = mb_strtolower($id);
-        $id = str_replace([
+        $key = str_replace([
             'ë',
             'é',
             'è',
@@ -34,7 +34,7 @@ class KeyHelper
             'c',
             '_',
 
-        ], $id);
+        ], $key);
         //Remove special characters (http://regexr.com/3cpha)
         //Don't use \w as character groop, it will allow special non utf-8 characters
         $regex = '/([^a-z0-9]+)|(\_{2,})/mi';
@@ -49,28 +49,28 @@ class KeyHelper
         //            }
         //        }
 
-        $id = preg_replace($regex, '_', $id);
+        $key = preg_replace($regex, '_', $key);
 
-        if (strlen($id) < 1) {
+        if (strlen($key) < 1) {
             $ex = new InvalidKeyException('Id must be longer than 1 character');
             echo $ex->getTraceAsString();
             throw $ex;
         }
 
-        $id = strtolower($id);
+        $key = strtolower($key);
 
         if ($maxLength > 0) {
-            $id = substr($id, 0, $maxLength);
+            $key = substr($key, 0, $maxLength);
         }
 
         //Remove leading or trailing slashes
-        $id = trim($id, '_');
+        $key = trim($key, '_');
         //Remove multi underscores
         //        $code = preg_replace('!\s+!', ' ', $code);
         //        $code = trim($code);
         //        $code = str_replace(' ', '_', $code);
 
-        return $id;
+        return $key;
     }
 
     private static function getObjectType($var): string
