@@ -17,6 +17,11 @@
       "Echron\\DataTypes\\": "src/DataTypes"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Echron\\DataTypes\\": "tests/"
+    }
+  },
   "require-dev": {
     "phpunit/phpunit": "^6.0.0"
   }

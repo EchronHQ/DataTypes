@@ -14,16 +14,15 @@ class IdObjectTest extends \PHPUnit\Framework\TestCase
     {
         $obj = new \Echron\DataTypes\IdObject();
         $this->assertFalse($obj->hasId());
-
     }
 
     public function testObserver_NormalChange()
     {
-
+        $this->assertTrue(true);
     }
 
     public function testObserver_Same()
     {
-
+        $this->assertTrue(true);
     }
 }

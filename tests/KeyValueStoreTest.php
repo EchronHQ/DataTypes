@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace Echron\DataTypes;
+
 class KeyValueStoreTest extends \PHPUnit\Framework\TestCase
 {
     public function testAdd()
@@ -15,7 +17,6 @@ class KeyValueStoreTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($value, $store->getValueByKey($key));
         $this->assertEquals($key, $store->getKeyByValue($value));
         $this->assertEquals([$key], $store->getKeys());
-
     }
 
     public function testRemoveByKey()
@@ -32,7 +33,6 @@ class KeyValueStoreTest extends \PHPUnit\Framework\TestCase
         // $this->assertEquals($value, $store->getValueByKey($key));
         //   $this->assertEquals($key, $store->getKeyByValue($value));
         $this->assertEquals([], $store->getKeys());
-
     }
 
     public function testRemoveByValue()
@@ -49,7 +49,6 @@ class KeyValueStoreTest extends \PHPUnit\Framework\TestCase
         // $this->assertEquals($value, $store->getValueByKey($key));
         //   $this->assertEquals($key, $store->getKeyByValue($value));
         $this->assertEquals([], $store->getKeys());
-
     }
 
     public function testAddNormalizedKey()
@@ -64,7 +63,6 @@ class KeyValueStoreTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($value, $store->getValueByKey($key));
         $this->assertEquals($key, $store->getKeyByValue($value));
         $this->assertEquals([$key], $store->getKeys());
-
     }
 
     public function testRemoveByKeyNormalizedKey()
@@ -81,7 +79,6 @@ class KeyValueStoreTest extends \PHPUnit\Framework\TestCase
         // $this->assertEquals($value, $store->getValueByKey($key));
         //   $this->assertEquals($key, $store->getKeyByValue($value));
         $this->assertEquals([], $store->getKeys());
-
     }
 
     public function testRemoveByValueNormalizedKey()
@@ -98,7 +95,6 @@ class KeyValueStoreTest extends \PHPUnit\Framework\TestCase
         // $this->assertEquals($value, $store->getValueByKey($key));
         //   $this->assertEquals($key, $store->getKeyByValue($value));
         $this->assertEquals([], $store->getKeys());
-
     }
 
 }
