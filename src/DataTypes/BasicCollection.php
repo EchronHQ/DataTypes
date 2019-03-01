@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Echron\DataTypes;
 
-abstract class BasicCollection implements \Iterator, \Countable, \JsonSerializable
+abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonSerializable
 {
     private $collection;
     private $index = 0;
@@ -21,7 +21,6 @@ abstract class BasicCollection implements \Iterator, \Countable, \JsonSerializab
         $this->index++;
 
         return $index;
-
     }
 
     protected final function removeFromCollection(int $index)
@@ -51,28 +50,32 @@ abstract class BasicCollection implements \Iterator, \Countable, \JsonSerializab
         return $data;
     }
 
-    public final function next(): void
+    public function getIterator()
     {
-        next($this->collection);
+        return new \ArrayIterator($this->collection);
     }
-
-    public final function key()
-    {
-        return key($this->collection);
-    }
-
-    public final function valid(): bool
-    {
-        return !!current($this->collection);
-    }
-
-    public final function rewind(): void
-    {
-        reset($this->collection);
-    }
-
-    public function current()
-    {
-        return current($this->collection);
-    }
+    //    public final function next(): void
+    //    {
+    //        next($this->collection);
+    //    }
+    //
+    //    public final function key()
+    //    {
+    //        return key($this->collection);
+    //    }
+    //
+    //    public final function valid(): bool
+    //    {
+    //        return !!current($this->collection);
+    //    }
+    //
+    //    public final function rewind(): void
+    //    {
+    //        reset($this->collection);
+    //    }
+    //
+    //    public function current()
+    //    {
+    //        return current($this->collection);
+    //    }
 }
