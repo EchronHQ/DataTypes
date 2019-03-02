@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Echron\DataTypes;
 
 use Echron\DataTypes\Observable\Context\Context;
-use Echron\DataTypes\Observable\Context\PropertyChangeContext;
 use Echron\DataTypes\Observable\Observable;
 use Echron\DataTypes\Observable\Observer;
 
@@ -18,7 +17,6 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
         parent::__construct();
         $this->idValueStore = new KeyValueStore();
         $this->codeValueStore = new KeyValueStore();
-
     }
 
     public function add(IdCodeObject $idCodeObject): int
@@ -32,14 +30,12 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
 
     public function removeByCode(string $code)
     {
-
         $index = $this->codeValueStore->getValueByKey($code);
 
         $this->idValueStore->removeByValue($index);
         $this->codeValueStore->removeByValue($index);
 
         $this->removeFromCollection($index);
-
     }
 
     public function removeById(int $id)
@@ -52,7 +48,7 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
         $this->removeFromCollection($index);
     }
 
-    public function getByCode(string $code)
+    public function getByCode(string $code):IdCodeObject
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
@@ -90,16 +86,16 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
     public function update(Observable $subject, Context $context)
     {
         throw new \Exception('Not implemented');
-        if ($context instanceof PropertyChangeContext) {
-            switch ($context->getProperty()) {
-                case 'id':
-                    $this->_updateId($context->getBefore(), $context->getAfter());
-                    break;
-                case 'code':
-                    $this->updateCode($context->getBefore(), $context->getAfter());
-                    break;
-            }
-        }
+        //        if ($context instanceof PropertyChangeContext) {
+        //            switch ($context->getProperty()) {
+        //                case 'id':
+        //                    $this->_updateId($context->getBefore(), $context->getAfter());
+        //                    break;
+        //                case 'code':
+        //                    $this->updateCode($context->getBefore(), $context->getAfter());
+        //                    break;
+        //            }
+        //        }
     }
 
 }

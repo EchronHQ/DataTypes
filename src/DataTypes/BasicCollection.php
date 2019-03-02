@@ -50,32 +50,9 @@ abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonS
         return $data;
     }
 
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->collection);
     }
-    //    public final function next(): void
-    //    {
-    //        next($this->collection);
-    //    }
-    //
-    //    public final function key()
-    //    {
-    //        return key($this->collection);
-    //    }
-    //
-    //    public final function valid(): bool
-    //    {
-    //        return !!current($this->collection);
-    //    }
-    //
-    //    public final function rewind(): void
-    //    {
-    //        reset($this->collection);
-    //    }
-    //
-    //    public function current()
-    //    {
-    //        return current($this->collection);
-    //    }
+
 }
