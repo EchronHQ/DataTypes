@@ -3,17 +3,19 @@ declare(strict_types=1);
 
 namespace Echron\DataTypes;
 
+use Echron\Tools\Normalize\NormalizeConfig;
+
 class IdCodeCollection extends BasicCollection
 {
 
     private $idValueStore;
     private $codeValueStore;
 
-    public function __construct()
+    public function __construct(NormalizeConfig $normalizeConfig = null)
     {
         parent::__construct();
-        $this->idValueStore = new KeyValueStore();
-        $this->codeValueStore = new KeyValueStore();
+        $this->idValueStore = new KeyValueStore(null, true);
+        $this->codeValueStore = new KeyValueStore($normalizeConfig);
     }
 
     public function add(int $id, string $code, $value): int

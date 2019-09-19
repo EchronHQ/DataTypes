@@ -10,7 +10,7 @@ class IdCollection extends BasicCollection
     public function __construct()
     {
         parent::__construct();
-        $this->idValueStore = new KeyValueStore();
+        $this->idValueStore = new KeyValueStore(null,true);
 
     }
 

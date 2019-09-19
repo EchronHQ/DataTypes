@@ -3,14 +3,16 @@ declare(strict_types=1);
 
 namespace Echron\DataTypes;
 
+use Echron\Tools\Normalize\NormalizeConfig;
+
 class CodeCollection extends BasicCollection
 {
     private $codeValueStore;
 
-    public function __construct()
+    public function __construct(NormalizeConfig $normalizeConfig = null)
     {
         parent::__construct();
-        $this->codeValueStore = new KeyValueStore();
+        $this->codeValueStore = new KeyValueStore($normalizeConfig);
 
     }
 
