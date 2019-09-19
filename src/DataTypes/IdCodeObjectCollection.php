@@ -49,13 +49,23 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
         $this->removeFromCollection($index);
     }
 
-    public function getByCode(string $code): IdCodeObject
+    /**
+     * @param string $code
+     * @return IdCodeObject
+     * @throws Exception\NotInCollectionException
+     */
+    public function getByCode(string $code)
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
         return $this->getByIndex($index);
     }
 
+    /**
+     * @param int $id
+     * @return IdCodeObject
+     * @throws Exception\NotInCollectionException
+     */
     public function getById(int $id)
     {
         $index = $this->idValueStore->getValueByKey($id);
