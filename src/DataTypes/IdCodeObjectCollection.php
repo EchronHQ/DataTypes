@@ -6,17 +6,18 @@ namespace Echron\DataTypes;
 use Echron\DataTypes\Observable\Context\Context;
 use Echron\DataTypes\Observable\Observable;
 use Echron\DataTypes\Observable\Observer;
+use Echron\Tools\Normalize\NormalizeConfig;
 
 class IdCodeObjectCollection extends BasicCollection implements Observer
 {
     private $idValueStore;
     private $codeValueStore;
 
-    public function __construct()
+    public function __construct(NormalizeConfig $normalizeConfig = null)
     {
         parent::__construct();
-        $this->idValueStore = new KeyValueStore();
-        $this->codeValueStore = new KeyValueStore();
+        $this->idValueStore = new KeyValueStore(null, true);
+        $this->codeValueStore = new KeyValueStore($normalizeConfig);
     }
 
     public function add(IdCodeObject $idCodeObject): int
@@ -48,7 +49,7 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
         $this->removeFromCollection($index);
     }
 
-    public function getByCode(string $code):IdCodeObject
+    public function getByCode(string $code): IdCodeObject
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
