@@ -30,7 +30,7 @@ abstract class TypedEnum extends BasicObject
         $className = get_called_class();
 
         foreach ($methods as $method) {
-            if ($method->class === $className) {
+            if (self::isEnumOrExtensionOfEnum($method->class, $className)) {
                 $enumItem = $method->invoke(null);
 
                 if ($enumItem instanceof $className && $enumItem->$getter() === $value) {
@@ -40,6 +40,15 @@ abstract class TypedEnum extends BasicObject
         }
 
         throw new \OutOfRangeException('Enum value "' . $value . '" not found');
+    }
+
+    private static function isEnumOrExtensionOfEnum(string $methodClass, string $className): bool
+    {
+        if ($methodClass === BasicObject::class || $methodClass === TypedEnum::class) {
+            return false;
+        }
+
+        return $methodClass === $className || \is_subclass_of($className, $methodClass);
     }
 
     public static function fromName(string $value)
