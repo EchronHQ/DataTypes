@@ -39,7 +39,7 @@ abstract class TypedEnum extends BasicObject
             }
         }
 
-        throw new \OutOfRangeException();
+        throw new \OutOfRangeException('Enum value "' . $value . '" not found');
     }
 
     public static function fromName(string $value)

@@ -19,4 +19,11 @@ class TypedEnumTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('OptionOne', $enum->getName());
     }
 
+    public function testInvalid()
+    {
+        $this->expectException(OutOfRangeException::class);
+
+        $this->expectExceptionMessage('nonexistingvalue');
+        $enum = TypedEnumImpl::fromValue('Enum value "nonexistingvalue" not found');
+    }
 }
