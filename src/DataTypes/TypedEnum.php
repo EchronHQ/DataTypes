@@ -30,7 +30,7 @@ abstract class TypedEnum extends BasicObject
         $className = get_called_class();
 
         foreach ($methods as $method) {
-            if ($method->class === $className) {
+            if (self::isEnumOrExtensionOfEnum($method->class, $className)) {
                 $enumItem = $method->invoke(null);
 
                 if ($enumItem instanceof $className && $enumItem->$getter() === $value) {
@@ -39,7 +39,16 @@ abstract class TypedEnum extends BasicObject
             }
         }
 
-        throw new \OutOfRangeException();
+        throw new \OutOfRangeException('Enum value "' . $value . '" not found');
+    }
+
+    private static function isEnumOrExtensionOfEnum(string $methodClass, string $className): bool
+    {
+        if ($methodClass === BasicObject::class || $methodClass === TypedEnum::class) {
+            return false;
+        }
+
+        return $methodClass === $className || \is_subclass_of($className, $methodClass);
     }
 
     public static function fromName(string $value)
@@ -64,10 +73,9 @@ abstract class TypedEnum extends BasicObject
             $debugTrace = debug_backtrace();
             $lastCaller = array_shift($debugTrace);
 
-            while ($lastCaller['class'] !== $className && count($debugTrace) > 0) {
+            while (!self::isEnumOrExtensionOfEnum($lastCaller['class'], $className) && count($debugTrace) > 0) {
                 $lastCaller = array_shift($debugTrace);
             }
-
             self::$instancedValues[$className][$value] = new static($value, (string)$lastCaller['function']);
         }
 
