@@ -73,10 +73,9 @@ abstract class TypedEnum extends BasicObject
             $debugTrace = debug_backtrace();
             $lastCaller = array_shift($debugTrace);
 
-            while ($lastCaller['class'] !== $className && count($debugTrace) > 0) {
+            while (!self::isEnumOrExtensionOfEnum($lastCaller['class'], $className) && count($debugTrace) > 0) {
                 $lastCaller = array_shift($debugTrace);
             }
-
             self::$instancedValues[$className][$value] = new static($value, (string)$lastCaller['function']);
         }
 

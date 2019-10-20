@@ -36,18 +36,41 @@ class TypedEnumTest extends \PHPUnit\Framework\TestCase
         $enum = TypedEnumImpl::fromName('nonexistingname');
     }
 
+    public function testGetFromNameAndValue()
+    {
+        $enum = TypedEnumImpl::fromValue(0);
+        $this->assertEquals($enum, TypedEnumImpl::OptionZero());
+
+        $enum = TypedEnumImpl::fromName('OptionZero');
+        $this->assertEquals($enum, TypedEnumImpl::OptionZero());
+
+        $enum = TypedEnumImpl::fromValue(1);
+        $this->assertEquals($enum, TypedEnumImpl::OptionOne());
+
+        $enum = TypedEnumImpl::fromName('OptionOne');
+        $this->assertEquals($enum, TypedEnumImpl::OptionOne());
+    }
+
     public function testExtended()
     {
         $enum = ExtendedTypedEnumImpl::fromValue(1);
         $this->assertEquals($enum, ExtendedTypedEnumImpl::OptionOne());
 
-//        $enum = ExtendedTypedEnumImpl::fromName('OptionOne');
-        //        $this->assertEquals($enum, ExtendedTypedEnumImpl::OptionOne());
-        //
-        //        $enum = ExtendedTypedEnumImpl::fromValue(2);
-        //        $this->assertEquals($enum, ExtendedTypedEnumImpl::OptionTwo());
-        //
-        //        $enum = ExtendedTypedEnumImpl::fromName('OptionTwo');
-        //        $this->assertEquals($enum, ExtendedTypedEnumImpl::OptionTwo());
+        $enum = ExtendedTypedEnumImpl::fromName('OptionOne');
+        $this->assertEquals($enum, ExtendedTypedEnumImpl::OptionOne());
+
+        $enum = ExtendedTypedEnumImpl::fromValue(2);
+        $this->assertEquals($enum, ExtendedTypedEnumImpl::OptionTwo());
+
+        $enum = ExtendedTypedEnumImpl::fromName('OptionTwo');
+        $this->assertEquals($enum, ExtendedTypedEnumImpl::OptionTwo());
+    }
+
+    public function testInvalidNameExtended()
+    {
+        $this->expectException(OutOfRangeException::class);
+
+        $this->expectExceptionMessage('Enum value "nonexistingname2" not found');
+        $enum = ExtendedTypedEnumImpl::fromName('nonexistingname2');
     }
 }
