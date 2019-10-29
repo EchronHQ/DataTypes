@@ -11,7 +11,7 @@
   ],
   "require": {
     "php": ">=7.0.0",
-    "echron/tools": "1.1.*",
+    "echron/tools": "^1.1",
     "ext-json": "*"
   },
   "autoload": {

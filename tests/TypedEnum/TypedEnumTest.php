@@ -73,4 +73,24 @@ class TypedEnumTest extends \PHPUnit\Framework\TestCase
         $this->expectExceptionMessage('Enum value "nonexistingname2" not found');
         $enum = ExtendedTypedEnumImpl::fromName('nonexistingname2');
     }
+
+    public function testGetFromEmptyValue()
+    {
+        $this->expectException(OutOfRangeException::class);
+
+        $this->expectExceptionMessage('Enum value "" not found');
+
+        $enum = TypedEnumImpl::fromValue('');
+        $this->assertEquals($enum, TypedEnumImpl::OptionZero());
+    }
+
+    public function testGetFromEmptyName()
+    {
+        $this->expectException(OutOfRangeException::class);
+
+        $this->expectExceptionMessage('Enum value "" not found');
+
+        $enum = TypedEnumImpl::fromName('');
+        $this->assertEquals($enum, TypedEnumImpl::OptionZero());
+    }
 }
