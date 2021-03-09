@@ -52,6 +52,11 @@ abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonS
 
     public function getIterator(): \ArrayIterator
     {
+        //TODO: is it possible to not return a new iterator on every call? this is not working for nested iterations!
+        //        if (\is_null($this->itterator)) {
+        //            $this->itterator = new \ArrayIterator($this->collection);
+        //        }
+        //        $this->itterator->rewind();
         return new \ArrayIterator($this->collection);
     }
 

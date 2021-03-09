@@ -20,12 +20,13 @@ class IdCodeCollection extends BasicCollection
 
     public function add(int $id, string $code, $value): int
     {
+        // TODO: what if we add a duplicate id or code?
         $index = $this->addToCollection($value);
         //if (!empty($id)) {
-        $this->idValueStore->add($id, $index);
+        $this->idValueStore->add($id, $index, true);
         //}
         if (!empty($code)) {
-            $this->codeValueStore->add($code, $index);
+            $this->codeValueStore->add($code, $index, true);
         }
 
         return $index;
