@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Echron\DataTypes;
 
+use Echron\DataTypes\Exception\ObjectAlreadyInCollectionException;
+
 class KeyValueStoreTest extends \PHPUnit\Framework\TestCase
 {
     public function testAdd()
@@ -97,4 +99,29 @@ class KeyValueStoreTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals([], $store->getKeys());
     }
 
+    public function testAddDuplicate()
+    {
+
+        $this->expectExceptionObject(new ObjectAlreadyInCollectionException('There is already a value with key "key"'));
+        $key = 'key';
+        $value = 'value';
+
+        $store = new \Echron\DataTypes\KeyValueStore();
+        $store->add('key', 'Value A');
+        $store->add('key', 'Value B');
+
+    }
+
+    public function testAddDuplicate_Normalized()
+    {
+
+        $this->expectExceptionObject(new ObjectAlreadyInCollectionException('There is already a value with key "key"'));
+
+        $value = 'value';
+
+        $store = new \Echron\DataTypes\KeyValueStore();
+        $store->add('key', 'Value A');
+        $store->add('key ', 'Value B');
+
+    }
 }

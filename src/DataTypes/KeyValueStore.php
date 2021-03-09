@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Echron\DataTypes;
 
 use Echron\DataTypes\Exception\NotInCollectionException;
+use Echron\DataTypes\Exception\ObjectAlreadyInCollectionException;
 use Echron\Tools\Normalize\NormalizeConfig;
 use Echron\Tools\Normalize\Normalizer;
 
@@ -32,13 +33,16 @@ class KeyValueStore
         return $key;
     }
 
-    public function add($key, $value)
+    public function add($key, $value,bool  $overwriteIfExist = false)
     {
+        $normalizedKey = $this->normalizeKey($key);
+
+        if (!$overwriteIfExist && \array_key_exists($normalizedKey, $this->hashMap)) {
+            throw new ObjectAlreadyInCollectionException('There is already a value with key "' . $normalizedKey . '"');
+        }
         $this->reversedHashMap[$value] = $key;
 
-        $key = $this->normalizeKey($key);
-
-        $this->hashMap[$key] = $value;
+        $this->hashMap[$normalizedKey] = $value;
     }
 
     public function getValueByKey($key)

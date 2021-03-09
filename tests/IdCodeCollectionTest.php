@@ -17,13 +17,13 @@ class IdObjectCollectionTest extends TestCase
         $this->assertTrue($collection->hasCode('31542415-28DE-475A-881D-56A138DEC9EA'));
 
         //Add duplicate ids
-        $collection->add(-1, '89B62C0F-6394-46A9-88DE-103D8D9C469A', 'result code 2');
+        $collection->add(-2, '89B62C0F-6394-46A9-88DE-103D8D9C469A', 'result code 2');
         $this->assertTrue($collection->hasCode('31542415-28DE-475A-881D-56A138DEC9EA'));
-        $collection->add(-1, '10B89B5D-0FF6-4B45-BCB1-7A751E4FF7EC', 'result code 3');
+        $collection->add(-3, '10B89B5D-0FF6-4B45-BCB1-7A751E4FF7EC', 'result code 3');
         $this->assertTrue($collection->hasCode('31542415-28DE-475A-881D-56A138DEC9EA'));
 
         //Add duplicate codes
-        $collection->add(-1, '31542415-28DE-475A-881D-56A138DEC9EA', 'result code 1 copy');
+        $collection->add(-4, '31542415-28DE-475A-881D-56A138DEC9EA', 'result code 1 copy');
         $this->assertTrue($collection->hasCode('31542415-28DE-475A-881D-56A138DEC9EA'));
     }
 
