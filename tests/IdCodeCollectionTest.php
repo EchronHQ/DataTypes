@@ -23,7 +23,7 @@ class IdObjectCollectionTest extends TestCase
         $this->assertTrue($collection->hasCode('31542415-28DE-475A-881D-56A138DEC9EA'));
 
         //Add duplicate codes
-        $collection->add(-4, '31542415-28DE-475A-881D-56A138DEC9EA', 'result code 1 copy');
+        $collection->add(-4, '31542415-28DE-475A-881D-56A138DEC9EA', 'result code 1 copy', true);
         $this->assertTrue($collection->hasCode('31542415-28DE-475A-881D-56A138DEC9EA'));
     }
 

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Echron\DataTypes;
 
+use Echron\DataTypes\Exception\ObjectAlreadyInCollectionException;
 use Echron\Tools\Normalize\NormalizeConfig;
 
 class IdCodeCollection extends BasicCollection
@@ -18,15 +19,23 @@ class IdCodeCollection extends BasicCollection
         $this->codeValueStore = new KeyValueStore($normalizeConfig);
     }
 
-    public function add(int $id, string $code, $value): int
+    public function add(int $id, string $code, $value, bool $overwriteIfExist = false): int
     {
         // TODO: what if we add a duplicate id or code?
+
+        if (!$overwriteIfExist && $this->idValueStore->hasKey($id)) {
+            throw new ObjectAlreadyInCollectionException('There is already a value with id "' . $id . '"');
+        }
+        if (!$overwriteIfExist && !empty($code) && $this->codeValueStore->hasKey($code)) {
+            throw new ObjectAlreadyInCollectionException('There is already a value with code "' . $code . '"');
+        }
+
         $index = $this->addToCollection($value);
         //if (!empty($id)) {
-        $this->idValueStore->add($id, $index, true);
+        $this->idValueStore->add($id, $index, $overwriteIfExist);
         //}
         if (!empty($code)) {
-            $this->codeValueStore->add($code, $index, true);
+            $this->codeValueStore->add($code, $index, $overwriteIfExist);
         }
 
         return $index;
