@@ -39,7 +39,7 @@ class IdObject extends BasicObject implements Observable
 
     public function hasId(): bool
     {
-        return $this->id !== -1;
+        return $this->id > -1;
 
     }
 
