@@ -12,6 +12,7 @@ class KeyValueStore
 {
     private $hashMap = [];
     private $reversedHashMap = [];
+    private $cachedNormalizedKeys = [];
 
     /** @var NormalizeConfig */
     private $normalizeConfig = null;
@@ -24,16 +25,22 @@ class KeyValueStore
         $this->normalizeConfig = $normalizeConfig;
     }
 
+
     protected function normalizeKey($key)
     {
         if (!\is_null($this->normalizeConfig)) {
-            $key = Normalizer::normalize((string)$key, $this->normalizeConfig);
+            if (isset($this->cachedNormalizedKeys[$key])) {
+                return $this->cachedNormalizedKeys[$key];
+            }
+            $normalizedKey = Normalizer::normalize((string)$key, $this->normalizeConfig);
+            $this->cachedNormalizedKeys[$key] = $normalizedKey;
+            $key = $normalizedKey;
         }
 
         return $key;
     }
 
-    public function add($key, $value,bool  $overwriteIfExist = false)
+    public function add($key, $value, bool $overwriteIfExist = false)
     {
         $normalizedKey = $this->normalizeKey($key);
 
@@ -49,7 +56,8 @@ class KeyValueStore
     {
         $key = $this->normalizeKey($key);
         //TODO: isset or key_exists?
-        if (!\key_exists($key, $this->hashMap)) {
+//        if (!\key_exists($key, $this->hashMap)) {
+        if (!isset($this->hashMap[$key])) {
             throw new NotInCollectionException('Key "' . $key . '" does not exist');
         }
 
@@ -59,7 +67,8 @@ class KeyValueStore
     public function getKeyByValue($value)
     {
         //TODO: isset or key_exists?
-        if (!\key_exists($value, $this->reversedHashMap)) {
+//        if (!\key_exists($value, $this->reversedHashMap)) {
+        if (!isset($this->reversedHashMap[$value])) {
             throw new NotInCollectionException('Value "' . $value . '" does not exist (' . \implode(', ', $this->reversedHashMap) . ')');
         }
 
@@ -94,7 +103,8 @@ class KeyValueStore
     {
         $key = $this->normalizeKey($key);
 
-        return \key_exists($key, $this->hashMap);
+        return isset($this->hashMap[$key]);
+        // \key_exists($key, $this->hashMap);
     }
 }
 
