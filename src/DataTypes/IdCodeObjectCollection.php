@@ -10,8 +10,8 @@ use Echron\Tools\Normalize\NormalizeConfig;
 
 class IdCodeObjectCollection extends BasicCollection implements Observer
 {
-    private $idValueStore;
-    private $codeValueStore;
+    private KeyValueStore $idValueStore;
+    private KeyValueStore $codeValueStore;
 
     public function __construct(NormalizeConfig $normalizeConfig = null)
     {
@@ -29,7 +29,7 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
         return $index;
     }
 
-    public function removeByCode(string $code)
+    public function removeByCode(string $code): void
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
@@ -39,7 +39,7 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
         $this->removeFromCollection($index);
     }
 
-    public function removeById(int $id)
+    public function removeById(int $id): void
     {
         $index = $this->idValueStore->getValueByKey($id);
 

@@ -10,12 +10,11 @@ use Echron\Tools\Normalize\Normalizer;
 
 class KeyValueStore
 {
-    private $hashMap = [];
-    private $reversedHashMap = [];
-    private $cachedNormalizedKeys = [];
+    private array $hashMap = [];
+    private array $reversedHashMap = [];
+    private array $cachedNormalizedKeys = [];
 
-    /** @var NormalizeConfig */
-    private $normalizeConfig = null;
+    private ?NormalizeConfig $normalizeConfig;
 
     public function __construct(NormalizeConfig $normalizeConfig = null, bool $skipNormalizer = false)
     {
@@ -40,7 +39,7 @@ class KeyValueStore
         return $key;
     }
 
-    public function add($key, $value, bool $overwriteIfExist = false)
+    public function add($key, $value, bool $overwriteIfExist = false): void
     {
         $normalizedKey = $this->normalizeKey($key);
 
@@ -75,7 +74,7 @@ class KeyValueStore
         return $this->reversedHashMap[$value];
     }
 
-    public function removeByKey($key)
+    public function removeByKey($key): void
     {
         $key = $this->normalizeKey($key);
         $value = $this->getValueByKey($key);
@@ -84,7 +83,7 @@ class KeyValueStore
         unset($this->reversedHashMap[$value]);
     }
 
-    public function removeByValue($value)
+    public function removeByValue($value): void
     {
         $key = $this->getKeyByValue($value);
 

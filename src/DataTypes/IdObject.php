@@ -10,8 +10,9 @@ use Echron\DataTypes\Observable\ObservableTrait;
 class IdObject extends BasicObject implements Observable
 {
     use ObservableTrait;
-    protected $id_max_length = -1;
-    private $id = -1;
+
+    protected int $id_max_length = -1;
+    private int $id = -1;
 
     public function __construct(int $id = null)
     {

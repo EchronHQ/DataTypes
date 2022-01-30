@@ -5,8 +5,8 @@ namespace Echron\DataTypes;
 
 abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonSerializable
 {
-    private $collection;
-    private $index = 0;
+    private array $collection;
+    private int $index = 0;
 
     public function __construct()
     {
@@ -23,7 +23,7 @@ abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonS
         return $index;
     }
 
-    protected final function removeFromCollection(int $index)
+    protected final function removeFromCollection(int $index): void
     {
         unset($this->collection[$index]);
     }
@@ -53,10 +53,10 @@ abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonS
     public function getIterator(): \ArrayIterator
     {
         //TODO: is it possible to not return a new iterator on every call? this is not working for nested iterations!
-        //        if (\is_null($this->itterator)) {
-        //            $this->itterator = new \ArrayIterator($this->collection);
+        //        if (\is_null($this->iterator)) {
+        //            $this->iterator = new \ArrayIterator($this->collection);
         //        }
-        //        $this->itterator->rewind();
+        //        $this->iterator->rewind();
         return new \ArrayIterator($this->collection);
     }
 

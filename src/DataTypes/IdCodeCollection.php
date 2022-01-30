@@ -9,8 +9,8 @@ use Echron\Tools\Normalize\NormalizeConfig;
 class IdCodeCollection extends BasicCollection
 {
 
-    private $idValueStore;
-    private $codeValueStore;
+    private KeyValueStore $idValueStore;
+    private KeyValueStore $codeValueStore;
 
     public function __construct(NormalizeConfig $normalizeConfig = null)
     {
@@ -22,6 +22,7 @@ class IdCodeCollection extends BasicCollection
     public function add(int $id, string $code, $value, bool $overwriteIfExist = false): int
     {
         // TODO: what if we add a duplicate id or code?
+        // TODO: should we mark the collection as overridable instead of passing this as an argument?
 
         if (!$overwriteIfExist && $this->idValueStore->hasKey($id)) {
             throw new ObjectAlreadyInCollectionException('There is already a value with id "' . $id . '"');

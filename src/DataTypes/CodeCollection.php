@@ -7,7 +7,7 @@ use Echron\Tools\Normalize\NormalizeConfig;
 
 class CodeCollection extends BasicCollection
 {
-    private $codeValueStore;
+    private KeyValueStore $codeValueStore;
 
     public function __construct(NormalizeConfig $normalizeConfig = null)
     {

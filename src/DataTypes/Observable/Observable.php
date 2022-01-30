@@ -26,7 +26,7 @@ interface Observable
     /**
      * Notify an observer
      *
-     * @param $context
+     * @param Context $context
      * @return mixed
      */
     function notify(Context $context);
