@@ -5,7 +5,8 @@ namespace Echron\DataTypes\Observable\Context;
 
 class PropertyChangeContext extends Context
 {
-    private $property, $before, $after;
+    private $before, $after;
+    private string $property;
 
     public function __construct(string $property, $before, $after)
     {

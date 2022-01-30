@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "php": ">=7.0 || >=8.0",
+    "php": ">=7.4 || >=8.0",
     "echron/tools": "^1.1",
     "ext-json": "*"
   },
@@ -25,6 +25,6 @@
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.0.0"
+    "phpunit/phpunit": "^9.5.13"
   }
 }

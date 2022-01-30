@@ -8,8 +8,8 @@ use Echron\DataTypes\Observable\Context\PropertyChangeContext;
 
 class IdCodeObject extends IdObject
 {
-    protected $code_max_length = -1;
-    private $code;
+    protected int $code_max_length = -1;
+    private ?string $code = null;
 
     public function __construct(int $id, string $code)
     {
@@ -28,7 +28,7 @@ class IdCodeObject extends IdObject
         return $this->code;
     }
 
-    public function setCode(string $code)
+    public function setCode(string $code): void
     {
         $before = $this->code;
         $code = KeyHelper::formatKey($code, false, $this->code_max_length);

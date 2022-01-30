@@ -10,7 +10,7 @@ use Echron\DataTypes\Observable\Observer;
 class IdObjectCollection extends BasicCollection implements Observer
 {
 
-    private $idValueStore;
+    private KeyValueStore $idValueStore;
 
     public function __construct()
     {

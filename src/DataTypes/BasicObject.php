@@ -7,7 +7,7 @@ class BasicObject
 {
 
     /**
-     * @param $name
+     * @param string $name
      * @throws \Exception
      * @internal
      * @deprecated
@@ -19,7 +19,7 @@ class BasicObject
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param $value
      * @throws \Exception
      * @deprecated

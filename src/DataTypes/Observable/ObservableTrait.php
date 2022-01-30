@@ -7,7 +7,7 @@ use Echron\DataTypes\Observable\Context\Context;
 
 trait ObservableTrait
 {
-    private $observers = [];
+    private array $observers = [];
 
     public function attach(Observer $observer_in)
     {
@@ -18,9 +18,9 @@ trait ObservableTrait
     public function detach(Observer $observer_in)
     {
         //$key = array_search($observer_in, $this->observers);
-        foreach ($this->observers as $okey => $oval) {
-            if ($oval == $observer_in) {
-                unset($this->observers[$okey]);
+        foreach ($this->observers as $observerKey => $observer) {
+            if ($observer == $observer_in) {
+                unset($this->observers[$observerKey]);
             }
         }
     }

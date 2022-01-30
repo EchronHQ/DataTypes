@@ -7,8 +7,8 @@ abstract class TypedEnum extends BasicObject
 {
     private static $instancedValues;
 
-    private $value;
-    private $name;
+    private string $value;
+    private string $name;
 
     private function __construct(string $value, string $name)
     {

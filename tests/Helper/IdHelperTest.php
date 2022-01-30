@@ -116,7 +116,7 @@ class IdHelperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('123', $formattedKey);
 
         $formattedKey = \Echron\DataTypes\Helper\KeyHelper::formatKey('0123');
-        $this->assertEquals('123', $formattedKey);
+        $this->assertEquals('0123', $formattedKey);
 
         $formattedKey = \Echron\DataTypes\Helper\KeyHelper::formatKey('3210');
         $this->assertEquals('3210', $formattedKey);
