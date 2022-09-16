@@ -3,17 +3,18 @@ declare(strict_types=1);
 
 namespace Echron\DataTypes;
 
-use Echron\DataTypes\Helper\KeyHelper;
 use Echron\DataTypes\Observable\Context\PropertyChangeContext;
+use Echron\Tools\Normalize\NormalizeConfig;
+use Echron\Tools\Normalize\Normalizer;
 
 class IdCodeObject extends IdObject
 {
-    protected int $code_max_length = -1;
+    protected ?int $code_max_length = null;
     private ?string $code = null;
+    protected ?NormalizeConfig $keyFormatConfig = null;
 
     public function __construct(int $id, string $code)
     {
-
         parent::__construct($id);
         $this->setCode($code);
     }
@@ -31,7 +32,14 @@ class IdCodeObject extends IdObject
     public function setCode(string $code): void
     {
         $before = $this->code;
-        $code = KeyHelper::formatKey($code, false, $this->code_max_length);
+        if ($this->keyFormatConfig === null) {
+            $this->keyFormatConfig = new NormalizeConfig();
+            if ($this->code_max_length !== null) {
+                $this->keyFormatConfig->setMaxLength($this->code_max_length);
+            }
+        }
+        $code = Normalizer::normalize($code, $this->keyFormatConfig);
+
 
         if ($code !== $before) {
             $this->code = $code;
