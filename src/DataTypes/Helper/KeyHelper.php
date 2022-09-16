@@ -7,6 +7,14 @@ use Echron\DataTypes\Exception\InvalidKeyException;
 
 class KeyHelper
 {
+    /**
+     * @param string $key
+     * @param bool $allowSlash
+     * @param int $maxLength
+     * @return string
+     * @throws InvalidKeyException
+     * @deprecated
+     */
     public static function formatKey(string $key, bool $allowSlash = false, int $maxLength = 0): string
     {
         //TODO: only allow int?
