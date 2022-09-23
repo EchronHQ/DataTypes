@@ -27,7 +27,7 @@ class IdObject extends BasicObject implements Observable
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         if ($id !== $this->id) {
             $before = $this->id;

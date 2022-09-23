@@ -18,13 +18,13 @@ class IdObjectCollection extends BasicCollection implements Observer
         $this->idValueStore = new IdValueStore();
     }
 
-    public function add(IdObject $idCodeObject)
+    public function add(IdObject $idCodeObject): void
     {
         $index = $this->addToCollection($idCodeObject);
         $this->idValueStore->add($idCodeObject->getId(), $index);
     }
 
-    public function removeById(int $id)
+    public function removeById(int $id): void
     {
         $index = $this->idValueStore->getValueByKey($id);
 
@@ -45,6 +45,9 @@ class IdObjectCollection extends BasicCollection implements Observer
         return $this->idValueStore->hasKey($id);
     }
 
+    /**
+     * @return int[]
+     */
     public function getIds(): array
     {
         return $this->idValueStore->getKeys();

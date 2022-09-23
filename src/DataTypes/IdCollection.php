@@ -21,7 +21,7 @@ class IdCollection extends BasicCollection
 
     }
 
-    public function removeById(int $id)
+    public function removeById(int $id): void
     {
         $index = $this->idValueStore->getValueByKey($id);
 

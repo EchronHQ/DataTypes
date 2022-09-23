@@ -16,14 +16,14 @@ class CodeCollection extends BasicCollection
 
     }
 
-    public function add(string $code, $value)
+    public function add(string $code, $value): void
     {
         $index = $this->addToCollection($value);
         $this->codeValueStore->add($code, $index);
 
     }
 
-    public function removeByCode(string $code)
+    public function removeByCode(string $code): void
     {
         $index = $this->codeValueStore->getValueByKey($code);
 

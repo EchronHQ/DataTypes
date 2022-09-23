@@ -42,7 +42,7 @@ class IdCodeCollection extends BasicCollection
         return $index;
     }
 
-    public function removeByCode(string $code)
+    public function removeByCode(string $code): void
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
@@ -52,7 +52,7 @@ class IdCodeCollection extends BasicCollection
         $this->removeFromCollection($index);
     }
 
-    public function removeById(int $id)
+    public function removeById(int $id): void
     {
         $index = $this->idValueStore->getValueByKey($id);
 
