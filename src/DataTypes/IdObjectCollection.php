@@ -10,12 +10,12 @@ use Echron\DataTypes\Observable\Observer;
 class IdObjectCollection extends BasicCollection implements Observer
 {
 
-    private KeyValueStore $idValueStore;
+    private IdValueStore $idValueStore;
 
     public function __construct()
     {
         parent::__construct();
-        $this->idValueStore = new KeyValueStore();
+        $this->idValueStore = new IdValueStore();
     }
 
     public function add(IdObject $idCodeObject)

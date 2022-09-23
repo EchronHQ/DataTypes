@@ -10,13 +10,13 @@ use Echron\Tools\Normalize\NormalizeConfig;
 
 class IdCodeObjectCollection extends BasicCollection implements Observer
 {
-    private KeyValueStore $idValueStore;
+    private IdValueStore $idValueStore;
     private KeyValueStore $codeValueStore;
 
     public function __construct(NormalizeConfig $normalizeConfig = null)
     {
         parent::__construct();
-        $this->idValueStore = new KeyValueStore(null, true);
+        $this->idValueStore = new IdValueStore();
         $this->codeValueStore = new KeyValueStore($normalizeConfig);
     }
 
@@ -83,11 +83,17 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
         return $this->idValueStore->hasKey($id);
     }
 
+    /**
+     * @return int[]
+     */
     public function getIds(): array
     {
         return $this->idValueStore->getKeys();
     }
 
+    /**
+     * @return string[]
+     */
     public function getCodes(): array
     {
         return $this->codeValueStore->getKeys();

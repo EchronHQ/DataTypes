@@ -9,13 +9,13 @@ use Echron\Tools\Normalize\NormalizeConfig;
 class IdCodeCollection extends BasicCollection
 {
 
-    private KeyValueStore $idValueStore;
+    private IdValueStore $idValueStore;
     private KeyValueStore $codeValueStore;
 
     public function __construct(NormalizeConfig $normalizeConfig = null)
     {
         parent::__construct();
-        $this->idValueStore = new KeyValueStore(null, true);
+        $this->idValueStore = new IdValueStore();
         $this->codeValueStore = new KeyValueStore($normalizeConfig);
     }
 

@@ -5,12 +5,12 @@ namespace Echron\DataTypes;
 
 class IdCollection extends BasicCollection
 {
-    private KeyValueStore $idValueStore;
+    private IdValueStore $idValueStore;
 
     public function __construct()
     {
         parent::__construct();
-        $this->idValueStore = new KeyValueStore(null,true);
+        $this->idValueStore = new IdValueStore();
 
     }
 
