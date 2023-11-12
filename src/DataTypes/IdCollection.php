@@ -14,7 +14,7 @@ class IdCollection extends BasicCollection
 
     }
 
-    public function add(int $id, $value)
+    public function add(int $id, mixed $value): void
     {
         $index = $this->addToCollection($value);
         $this->idValueStore->add($id, $index);
@@ -30,7 +30,7 @@ class IdCollection extends BasicCollection
         $this->removeFromCollection($index);
     }
 
-    public function getById(int $id)
+    public function getById(int $id): mixed
     {
         $index = $this->idValueStore->getValueByKey($id);
 

@@ -16,7 +16,7 @@ class IdValueStore
     {
     }
 
-    public function add(int $key, $value, bool $overwriteIfExist = false): void
+    public function add(int $key, mixed $value, bool $overwriteIfExist = false): void
     {
 
         if (!$overwriteIfExist && \array_key_exists($key, $this->hashMap)) {
@@ -27,7 +27,7 @@ class IdValueStore
         $this->hashMap[$key] = $value;
     }
 
-    public function getValueByKey(int $key)
+    public function getValueByKey(int $key): mixed
     {
 
         //TODO: isset or key_exists?
@@ -39,7 +39,7 @@ class IdValueStore
         return $this->hashMap[$key];
     }
 
-    public function getKeyByValue($value): int
+    public function getKeyByValue(mixed $value): int
     {
         //TODO: isset or key_exists?
 //        if (!\key_exists($value, $this->reversedHashMap)) {
@@ -59,7 +59,7 @@ class IdValueStore
         unset($this->reversedHashMap[$value]);
     }
 
-    public function removeByValue($value): void
+    public function removeByValue(mixed $value): void
     {
         $key = $this->getKeyByValue($value);
 

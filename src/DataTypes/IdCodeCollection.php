@@ -19,7 +19,7 @@ class IdCodeCollection extends BasicCollection
         $this->codeValueStore = new KeyValueStore($normalizeConfig);
     }
 
-    public function add(int $id, string $code, $value, bool $overwriteIfExist = false): int
+    public function add(int $id, string $code, mixed $value, bool $overwriteIfExist = false): int
     {
         // TODO: what if we add a duplicate id or code?
         // TODO: should we mark the collection as overridable instead of passing this as an argument?
@@ -62,14 +62,14 @@ class IdCodeCollection extends BasicCollection
         $this->removeFromCollection($index);
     }
 
-    public function getByCode(string $code)
+    public function getByCode(string $code): mixed
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
         return $this->getByIndex($index);
     }
 
-    public function getById(int $id)
+    public function getById(int $id): mixed
     {
         $index = $this->idValueStore->getValueByKey($id);
 

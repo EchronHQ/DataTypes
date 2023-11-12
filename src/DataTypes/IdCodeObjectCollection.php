@@ -54,7 +54,7 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
      * @return IdCodeObject
      * @throws Exception\NotInCollectionException
      */
-    public function getByCode(string $code)
+    public function getByCode(string $code): IdCodeObject
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
@@ -66,7 +66,7 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
      * @return IdCodeObject
      * @throws Exception\NotInCollectionException
      */
-    public function getById(int $id)
+    public function getById(int $id): IdCodeObject
     {
         $index = $this->idValueStore->getValueByKey($id);
 

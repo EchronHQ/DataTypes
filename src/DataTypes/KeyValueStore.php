@@ -39,7 +39,7 @@ class KeyValueStore
         return $key;
     }
 
-    public function add(string $key, $value, bool $overwriteIfExist = false): void
+    public function add(string $key, mixed $value, bool $overwriteIfExist = false): void
     {
         $normalizedKey = $this->normalizeKey($key);
 
@@ -51,7 +51,7 @@ class KeyValueStore
         $this->hashMap[$normalizedKey] = $value;
     }
 
-    public function getValueByKey(string $key)
+    public function getValueByKey(string $key): mixed
     {
         $key = $this->normalizeKey($key);
         //TODO: isset or key_exists?
@@ -63,7 +63,7 @@ class KeyValueStore
         return $this->hashMap[$key];
     }
 
-    public function getKeyByValue($value): string
+    public function getKeyByValue(mixed $value): string
     {
         //TODO: isset or key_exists?
 //        if (!\key_exists($value, $this->reversedHashMap)) {
@@ -83,7 +83,7 @@ class KeyValueStore
         unset($this->reversedHashMap[$value]);
     }
 
-    public function removeByValue($value): void
+    public function removeByValue(mixed $value): void
     {
         $key = $this->getKeyByValue($value);
 

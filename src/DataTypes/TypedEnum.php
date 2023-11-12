@@ -2,7 +2,9 @@
 declare(strict_types=1);
 
 namespace Echron\DataTypes;
-
+/**
+ * @deprecated Use PHP 8 enums instead
+ */
 abstract class TypedEnum extends BasicObject
 {
     private static $instancedValues;

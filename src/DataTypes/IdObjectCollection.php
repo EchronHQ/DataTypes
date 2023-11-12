@@ -33,7 +33,7 @@ class IdObjectCollection extends BasicCollection implements Observer
         $this->removeFromCollection($index);
     }
 
-    public function getById(int $id)
+    public function getById(int $id): mixed
     {
         $index = $this->idValueStore->getValueByKey($id);
 

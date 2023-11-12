@@ -9,9 +9,9 @@ use Echron\Tools\Normalize\Normalizer;
 
 class IdCodeObject extends IdObject
 {
-    protected ?int $code_max_length = null;
-    private ?string $code = null;
-    protected ?NormalizeConfig $keyFormatConfig = null;
+    protected int|null $code_max_length = null;
+    private string|null $code = null;
+    protected NormalizeConfig|null $keyFormatConfig = null;
 
     public function __construct(int $id, string $code)
     {

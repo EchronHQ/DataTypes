@@ -5,15 +5,14 @@ namespace Echron\DataTypes;
 
 abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonSerializable
 {
-    private array $collection;
+    private array $collection = [];
     private int $index = 0;
 
     public function __construct()
     {
-        $this->collection = [];
     }
 
-    protected final function addToCollection($data): int
+    protected final function addToCollection(mixed $data): int
     {
         $index = $this->index;
         $this->collection[$index] = $data;
@@ -28,7 +27,7 @@ abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonS
         unset($this->collection[$index]);
     }
 
-    protected final function getByIndex(int $index)
+    protected final function getByIndex(int $index): mixed
     {
         return $this->collection[$index];
     }
