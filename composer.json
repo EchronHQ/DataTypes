@@ -1,17 +1,19 @@
 {
   "name": "echron/datatypes",
   "description": "Extra basic datatypes and helper classes",
-  "homepage": "https://github.com/echron/datatypes",
+  "homepage": "https://github.com/EchronHQ/DataTypes",
   "type": "library",
   "license": "MIT",
   "authors": [
     {
-      "name": "Stijn Duynslaeger"
+      "name": "Stijn Duynslaeger",
+      "email": "stijn@echron.com",
+      "homepage": "https://echron.com"
     }
   ],
   "require": {
     "php": ">=8.1",
-    "echron/tools": "^1.1",
+    "echron/tools": "^1.6",
     "ext-json": "*"
   },
   "autoload": {
