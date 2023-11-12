@@ -9,17 +9,17 @@ use Echron\Tools\Normalize\NormalizeConfig;
 class IdCodeCollection extends BasicCollection
 {
 
-    private KeyValueStore $idValueStore;
+    private IdValueStore $idValueStore;
     private KeyValueStore $codeValueStore;
 
     public function __construct(NormalizeConfig $normalizeConfig = null)
     {
         parent::__construct();
-        $this->idValueStore = new KeyValueStore(null, true);
+        $this->idValueStore = new IdValueStore();
         $this->codeValueStore = new KeyValueStore($normalizeConfig);
     }
 
-    public function add(int $id, string $code, $value, bool $overwriteIfExist = false): int
+    public function add(int $id, string $code, mixed $value, bool $overwriteIfExist = false): int
     {
         // TODO: what if we add a duplicate id or code?
         // TODO: should we mark the collection as overridable instead of passing this as an argument?
@@ -42,7 +42,7 @@ class IdCodeCollection extends BasicCollection
         return $index;
     }
 
-    public function removeByCode(string $code)
+    public function removeByCode(string $code): void
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
@@ -52,7 +52,7 @@ class IdCodeCollection extends BasicCollection
         $this->removeFromCollection($index);
     }
 
-    public function removeById(int $id)
+    public function removeById(int $id): void
     {
         $index = $this->idValueStore->getValueByKey($id);
 
@@ -62,14 +62,14 @@ class IdCodeCollection extends BasicCollection
         $this->removeFromCollection($index);
     }
 
-    public function getByCode(string $code)
+    public function getByCode(string $code): mixed
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
         return $this->getByIndex($index);
     }
 
-    public function getById(int $id)
+    public function getById(int $id): mixed
     {
         $index = $this->idValueStore->getValueByKey($id);
 

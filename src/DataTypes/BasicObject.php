@@ -30,6 +30,11 @@ class BasicObject
         throw new \Exception('Cannot set new property "' . $name . '" to instance of "' . get_class($this) . '"');
     }
 
+    public function __isset(string $name)
+    {
+        throw new \Exception('Cannot use method isset "' . $name . '" to instance of "' . get_class($this) . '"');
+    }
+
     function jsonSerialize(): array
     {
         return get_object_vars($this);

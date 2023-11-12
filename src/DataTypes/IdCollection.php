@@ -5,23 +5,23 @@ namespace Echron\DataTypes;
 
 class IdCollection extends BasicCollection
 {
-    private KeyValueStore $idValueStore;
+    private IdValueStore $idValueStore;
 
     public function __construct()
     {
         parent::__construct();
-        $this->idValueStore = new KeyValueStore(null,true);
+        $this->idValueStore = new IdValueStore();
 
     }
 
-    public function add(int $id, $value)
+    public function add(int $id, mixed $value): void
     {
         $index = $this->addToCollection($value);
         $this->idValueStore->add($id, $index);
 
     }
 
-    public function removeById(int $id)
+    public function removeById(int $id): void
     {
         $index = $this->idValueStore->getValueByKey($id);
 
@@ -30,7 +30,7 @@ class IdCollection extends BasicCollection
         $this->removeFromCollection($index);
     }
 
-    public function getById(int $id)
+    public function getById(int $id): mixed
     {
         $index = $this->idValueStore->getValueByKey($id);
 

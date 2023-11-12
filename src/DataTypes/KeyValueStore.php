@@ -25,13 +25,13 @@ class KeyValueStore
     }
 
 
-    protected function normalizeKey($key)
+    protected function normalizeKey(string $key): string
     {
         if (!\is_null($this->normalizeConfig)) {
             if (isset($this->cachedNormalizedKeys[$key])) {
                 return $this->cachedNormalizedKeys[$key];
             }
-            $normalizedKey = Normalizer::normalize((string)$key, $this->normalizeConfig);
+            $normalizedKey = Normalizer::normalize($key, $this->normalizeConfig);
             $this->cachedNormalizedKeys[$key] = $normalizedKey;
             $key = $normalizedKey;
         }
@@ -39,7 +39,7 @@ class KeyValueStore
         return $key;
     }
 
-    public function add($key, $value, bool $overwriteIfExist = false): void
+    public function add(string $key, mixed $value, bool $overwriteIfExist = false): void
     {
         $normalizedKey = $this->normalizeKey($key);
 
@@ -51,7 +51,7 @@ class KeyValueStore
         $this->hashMap[$normalizedKey] = $value;
     }
 
-    public function getValueByKey($key)
+    public function getValueByKey(string $key): mixed
     {
         $key = $this->normalizeKey($key);
         //TODO: isset or key_exists?
@@ -63,7 +63,7 @@ class KeyValueStore
         return $this->hashMap[$key];
     }
 
-    public function getKeyByValue($value)
+    public function getKeyByValue(mixed $value): string
     {
         //TODO: isset or key_exists?
 //        if (!\key_exists($value, $this->reversedHashMap)) {
@@ -74,7 +74,7 @@ class KeyValueStore
         return $this->reversedHashMap[$value];
     }
 
-    public function removeByKey($key): void
+    public function removeByKey(string $key): void
     {
         $key = $this->normalizeKey($key);
         $value = $this->getValueByKey($key);
@@ -83,7 +83,7 @@ class KeyValueStore
         unset($this->reversedHashMap[$value]);
     }
 
-    public function removeByValue($value): void
+    public function removeByValue(mixed $value): void
     {
         $key = $this->getKeyByValue($value);
 
@@ -93,12 +93,15 @@ class KeyValueStore
         unset($this->reversedHashMap[$value]);
     }
 
+    /**
+     * @return string[]
+     */
     public function getKeys(): array
     {
         return \array_values($this->reversedHashMap);
     }
 
-    public function hasKey($key): bool
+    public function hasKey(string $key): bool
     {
         $key = $this->normalizeKey($key);
 

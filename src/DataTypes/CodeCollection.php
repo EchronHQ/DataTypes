@@ -16,14 +16,14 @@ class CodeCollection extends BasicCollection
 
     }
 
-    public function add(string $code, $value)
+    public function add(string $code, mixed $value): void
     {
         $index = $this->addToCollection($value);
         $this->codeValueStore->add($code, $index);
 
     }
 
-    public function removeByCode(string $code)
+    public function removeByCode(string $code): void
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
@@ -32,7 +32,7 @@ class CodeCollection extends BasicCollection
         $this->removeFromCollection($index);
     }
 
-    public function getByCode(string $code)
+    public function getByCode(string $code): mixed
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
