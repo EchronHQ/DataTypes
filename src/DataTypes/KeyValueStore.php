@@ -10,11 +10,14 @@ use Echron\Tools\Normalize\Normalizer;
 
 class KeyValueStore
 {
+    /** @var array<string, mixed> */
     private array $hashMap = [];
+    /** @var array<mixed,string> */
     private array $reversedHashMap = [];
+    /** @var array<string, string> */
     private array $cachedNormalizedKeys = [];
 
-    private ?NormalizeConfig $normalizeConfig;
+    private NormalizeConfig|null $normalizeConfig;
 
     public function __construct(NormalizeConfig $normalizeConfig = null, bool $skipNormalizer = false)
     {

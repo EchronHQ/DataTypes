@@ -7,6 +7,11 @@ use Echron\DataTypes\Observable\Context\Context;
 use Echron\DataTypes\Observable\Observable;
 use Echron\DataTypes\Observable\Observer;
 
+/**
+ * @template TValue as IdObject
+ *
+ * @extends BasicCollection<TValue>
+ */
 class IdObjectCollection extends BasicCollection implements Observer
 {
 
@@ -18,6 +23,11 @@ class IdObjectCollection extends BasicCollection implements Observer
         $this->idValueStore = new IdValueStore();
     }
 
+    /**
+     * @param TValue $idCodeObject
+     * @return void
+     * @throws Exception\ObjectAlreadyInCollectionException
+     */
     public function add(IdObject $idCodeObject): void
     {
         $index = $this->addToCollection($idCodeObject);
@@ -33,7 +43,12 @@ class IdObjectCollection extends BasicCollection implements Observer
         $this->removeFromCollection($index);
     }
 
-    public function getById(int $id): mixed
+    /**
+     * @param int $id
+     * @return TValue
+     * @throws Exception\NotInCollectionException
+     */
+    public function getById(int $id)
     {
         $index = $this->idValueStore->getValueByKey($id);
 
@@ -53,7 +68,7 @@ class IdObjectCollection extends BasicCollection implements Observer
         return $this->idValueStore->getKeys();
     }
 
-    public function update(Observable $subject, Context $context)
+    public function update(Observable $subject, Context $context): void
     {
         throw new \Exception('Not implemented');
         //        if ($context instanceof PropertyChangeContext) {

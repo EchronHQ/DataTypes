@@ -3,8 +3,14 @@ declare(strict_types=1);
 
 namespace Echron\DataTypes;
 
+/**
+ * @template-covariant TValue of mixed
+ */
 abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonSerializable
 {
+    /**
+     * @var array<int, TValue>
+     */
     private array $collection = [];
     private int $index = 0;
 
@@ -12,7 +18,11 @@ abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonS
     {
     }
 
-    protected final function addToCollection(mixed $data): int
+    /**
+     * @param TValue $data
+     * @return int
+     */
+    final protected function addToCollection(mixed $data): int
     {
         $index = $this->index;
         $this->collection[$index] = $data;
@@ -22,17 +32,20 @@ abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonS
         return $index;
     }
 
-    protected final function removeFromCollection(int $index): void
+    final protected function removeFromCollection(int $index): void
     {
         unset($this->collection[$index]);
     }
 
-    protected final function getByIndex(int $index): mixed
+    /**
+     * @return TValue
+     */
+    final protected function getByIndex(int $index)
     {
         return $this->collection[$index];
     }
 
-    public final function count(): int
+    final public function count(): int
     {
         return count($this->collection);
     }
@@ -49,7 +62,10 @@ abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonS
         return $data;
     }
 
-    public function getIterator(): \ArrayIterator
+    /**
+     * @return \ArrayIterator<int, TValue>
+     */
+    public function getIterator(): \Traversable
     {
         //TODO: is it possible to not return a new iterator on every call? this is not working for nested iterations!
         //        if (\is_null($this->iterator)) {

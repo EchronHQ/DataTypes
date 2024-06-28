@@ -6,6 +6,11 @@ namespace Echron\DataTypes;
 use Echron\DataTypes\Exception\ObjectAlreadyInCollectionException;
 use Echron\Tools\Normalize\NormalizeConfig;
 
+/**
+ * @template TValue as mixed
+ *
+ * @extends BasicCollection<TValue>
+ */
 class IdCodeCollection extends BasicCollection
 {
 
@@ -19,6 +24,14 @@ class IdCodeCollection extends BasicCollection
         $this->codeValueStore = new KeyValueStore($normalizeConfig);
     }
 
+    /**
+     * @param int $id
+     * @param string $code
+     * @param TValue $value
+     * @param bool $overwriteIfExist
+     * @return int
+     * @throws ObjectAlreadyInCollectionException
+     */
     public function add(int $id, string $code, mixed $value, bool $overwriteIfExist = false): int
     {
         // TODO: what if we add a duplicate id or code?
@@ -62,14 +75,24 @@ class IdCodeCollection extends BasicCollection
         $this->removeFromCollection($index);
     }
 
-    public function getByCode(string $code): mixed
+    /**
+     * @param string $code
+     * @return TValue
+     * @throws Exception\NotInCollectionException
+     */
+    public function getByCode(string $code)
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
         return $this->getByIndex($index);
     }
 
-    public function getById(int $id): mixed
+    /**
+     * @param int $id
+     * @return TValue
+     * @throws Exception\NotInCollectionException
+     */
+    public function getById(int $id)
     {
         $index = $this->idValueStore->getValueByKey($id);
 
@@ -86,11 +109,17 @@ class IdCodeCollection extends BasicCollection
         return $this->idValueStore->hasKey($id);
     }
 
+    /**
+     * @return int[]
+     */
     public function getIds(): array
     {
         return $this->idValueStore->getKeys();
     }
 
+    /**
+     * @return string[]
+     */
     public function getCodes(): array
     {
         return $this->codeValueStore->getKeys();

@@ -8,7 +8,9 @@ use Echron\DataTypes\Exception\ObjectAlreadyInCollectionException;
 
 class IdValueStore
 {
+    /** @var array<int, mixed> */
     private array $hashMap = [];
+    /** @var array<mixed,int> */
     private array $reversedHashMap = [];
 
 

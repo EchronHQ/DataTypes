@@ -2,7 +2,11 @@
 declare(strict_types=1);
 
 namespace Echron\DataTypes;
-
+/**
+ * @template TValue
+ *
+ * @extends BasicCollection<TValue>
+ */
 class IdCollection extends BasicCollection
 {
     private IdValueStore $idValueStore;
@@ -14,6 +18,12 @@ class IdCollection extends BasicCollection
 
     }
 
+    /**
+     * @param int $id
+     * @param TValue $value
+     * @return void
+     * @throws Exception\ObjectAlreadyInCollectionException
+     */
     public function add(int $id, mixed $value): void
     {
         $index = $this->addToCollection($value);
@@ -30,7 +40,12 @@ class IdCollection extends BasicCollection
         $this->removeFromCollection($index);
     }
 
-    public function getById(int $id): mixed
+    /**
+     * @param int $id
+     * @return TValue
+     * @throws Exception\NotInCollectionException
+     */
+    public function getById(int $id)
     {
         $index = $this->idValueStore->getValueByKey($id);
 

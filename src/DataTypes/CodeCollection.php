@@ -5,6 +5,11 @@ namespace Echron\DataTypes;
 
 use Echron\Tools\Normalize\NormalizeConfig;
 
+/**
+ * @template TValue
+ *
+ * @extends BasicCollection<TValue>
+ */
 class CodeCollection extends BasicCollection
 {
     private KeyValueStore $codeValueStore;
@@ -13,9 +18,14 @@ class CodeCollection extends BasicCollection
     {
         parent::__construct();
         $this->codeValueStore = new KeyValueStore($normalizeConfig);
-
     }
 
+    /**
+     * @param string $code
+     * @param TValue $value
+     * @return void
+     * @throws Exception\ObjectAlreadyInCollectionException
+     */
     public function add(string $code, mixed $value): void
     {
         $index = $this->addToCollection($value);
@@ -32,7 +42,12 @@ class CodeCollection extends BasicCollection
         $this->removeFromCollection($index);
     }
 
-    public function getByCode(string $code): mixed
+    /**
+     * @param string $code
+     * @return TValue
+     * @throws Exception\NotInCollectionException
+     */
+    public function getByCode(string $code)
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
@@ -44,6 +59,9 @@ class CodeCollection extends BasicCollection
         return $this->codeValueStore->hasKey($code);
     }
 
+    /**
+     * @return string[]
+     */
     public function getCodes(): array
     {
         return $this->codeValueStore->getKeys();

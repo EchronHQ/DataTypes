@@ -8,6 +8,11 @@ use Echron\DataTypes\Observable\Observable;
 use Echron\DataTypes\Observable\Observer;
 use Echron\Tools\Normalize\NormalizeConfig;
 
+/**
+ * @template TValue as IdCodeObject
+ *
+ * @extends BasicCollection<TValue>
+ */
 class IdCodeObjectCollection extends BasicCollection implements Observer
 {
     private IdValueStore $idValueStore;
@@ -20,6 +25,11 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
         $this->codeValueStore = new KeyValueStore($normalizeConfig);
     }
 
+    /**
+     * @param TValue $idCodeObject
+     * @return int
+     * @throws Exception\ObjectAlreadyInCollectionException
+     */
     public function add(IdCodeObject $idCodeObject): int
     {
         $index = $this->addToCollection($idCodeObject);
@@ -51,10 +61,10 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
 
     /**
      * @param string $code
-     * @return IdCodeObject
+     * @return TValue
      * @throws Exception\NotInCollectionException
      */
-    public function getByCode(string $code): IdCodeObject
+    public function getByCode(string $code)
     {
         $index = $this->codeValueStore->getValueByKey($code);
 
@@ -63,10 +73,10 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
 
     /**
      * @param int $id
-     * @return IdCodeObject
+     * @return TValue
      * @throws Exception\NotInCollectionException
      */
-    public function getById(int $id): IdCodeObject
+    public function getById(int $id)
     {
         $index = $this->idValueStore->getValueByKey($id);
 
