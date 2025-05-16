@@ -3,51 +3,27 @@ declare(strict_types=1);
 
 namespace Echron\DataTypes;
 
+use Ds\Map;
+
 /**
  * @template-covariant TValue of mixed
  */
 abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonSerializable
 {
     /**
-     * @var array<int, TValue>
+     * @var Map<int, TValue>
      */
-    private array $collection = [];
+    private Map $collection;
     private int $index = 0;
 
     public function __construct()
     {
-    }
-
-    /**
-     * @param TValue $data
-     * @return int
-     */
-    final protected function addToCollection(mixed $data): int
-    {
-        $index = $this->index;
-        $this->collection[$index] = $data;
-
-        $this->index++;
-
-        return $index;
-    }
-
-    final protected function removeFromCollection(int $index): void
-    {
-        unset($this->collection[$index]);
-    }
-
-    /**
-     * @return TValue
-     */
-    final protected function getByIndex(int $index)
-    {
-        return $this->collection[$index];
+        $this->collection = new Map();
     }
 
     final public function count(): int
     {
-        return count($this->collection);
+        return $this->collection->count();
     }
 
     function jsonSerialize(): array
@@ -72,7 +48,34 @@ abstract class BasicCollection implements \IteratorAggregate, \Countable, \JsonS
         //            $this->iterator = new \ArrayIterator($this->collection);
         //        }
         //        $this->iterator->rewind();
-        return new \ArrayIterator($this->collection);
+        return $this->collection->getIterator();
+    }
+
+    /**
+     * @param TValue $data
+     * @return int
+     */
+    final protected function addToCollection(mixed $data): int
+    {
+        $index = $this->index;
+        $this->collection->put($index, $data);
+
+        $this->index++;
+
+        return $index;
+    }
+
+    final protected function removeFromCollection(int $index): void
+    {
+        $this->collection->remove($index);
+    }
+
+    /**
+     * @return TValue
+     */
+    final protected function getByIndex(int $index)
+    {
+        return $this->collection->get($index);
     }
 
 }

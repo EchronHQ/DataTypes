@@ -10,11 +10,13 @@ class CodeCollectionTest extends TestCase
 
     public function testNestedIteration()
     {
+        /** @var CodeCollection<string> $collection */
         $collection = new CodeCollection();
         $collection->add('A', 'A Value');
         $collection->add('B', 'B Value');
         $collection->add('C', 'C Value');
 
+        // $x = $collection->getByCode('12');
         //        $collection2 = new CodeCollection();
         //        $collection2->add('A', 'A Value');
         //        $collection2->add('B', 'B Value');
