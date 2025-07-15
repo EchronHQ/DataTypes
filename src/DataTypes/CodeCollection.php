@@ -14,7 +14,7 @@ class CodeCollection extends BasicCollection
 {
     private KeyValueStore $codeValueStore;
 
-    public function __construct(NormalizeConfig $normalizeConfig = null)
+    public function __construct(NormalizeConfig|null $normalizeConfig = null)
     {
         parent::__construct();
         $this->codeValueStore = new KeyValueStore($normalizeConfig);

@@ -19,27 +19,12 @@ class KeyValueStore
 
     private NormalizeConfig|null $normalizeConfig;
 
-    public function __construct(NormalizeConfig $normalizeConfig = null, bool $skipNormalizer = false)
+    public function __construct(NormalizeConfig|null $normalizeConfig = null, bool $skipNormalizer = false)
     {
         if (\is_null($normalizeConfig) && !$skipNormalizer) {
             $normalizeConfig = new NormalizeConfig();
         }
         $this->normalizeConfig = $normalizeConfig;
-    }
-
-
-    protected function normalizeKey(string $key): string
-    {
-        if (!\is_null($this->normalizeConfig)) {
-            if (isset($this->cachedNormalizedKeys[$key])) {
-                return $this->cachedNormalizedKeys[$key];
-            }
-            $normalizedKey = Normalizer::normalize($key, $this->normalizeConfig);
-            $this->cachedNormalizedKeys[$key] = $normalizedKey;
-            $key = $normalizedKey;
-        }
-
-        return $key;
     }
 
     public function add(string $key, mixed $value, bool $overwriteIfExist = false): void
@@ -110,6 +95,20 @@ class KeyValueStore
 
         return isset($this->hashMap[$key]);
         // \key_exists($key, $this->hashMap);
+    }
+
+    protected function normalizeKey(string $key): string
+    {
+        if (!\is_null($this->normalizeConfig)) {
+            if (isset($this->cachedNormalizedKeys[$key])) {
+                return $this->cachedNormalizedKeys[$key];
+            }
+            $normalizedKey = Normalizer::normalize($key, $this->normalizeConfig);
+            $this->cachedNormalizedKeys[$key] = $normalizedKey;
+            $key = $normalizedKey;
+        }
+
+        return $key;
     }
 }
 

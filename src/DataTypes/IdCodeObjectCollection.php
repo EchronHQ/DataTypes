@@ -18,7 +18,7 @@ class IdCodeObjectCollection extends BasicCollection implements Observer
     private IdValueStore $idValueStore;
     private KeyValueStore $codeValueStore;
 
-    public function __construct(NormalizeConfig $normalizeConfig = null)
+    public function __construct(NormalizeConfig|null $normalizeConfig = null)
     {
         parent::__construct();
         $this->idValueStore = new IdValueStore();

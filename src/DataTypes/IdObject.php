@@ -14,7 +14,7 @@ class IdObject extends BasicObject implements Observable
     protected int $id_max_length = -1;
     private int $id = -1;
 
-    public function __construct(int $id = null)
+    public function __construct(int|null $id = null)
     {
         if ($id !== null) {
             $this->setId($id);
